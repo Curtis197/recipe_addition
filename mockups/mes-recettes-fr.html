@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mes Recettes - Akeli Diet Créateurs</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: #f1f4f8;
+            color: #1d2428;
+        }
+
+        .container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 280px;
+            background: white;
+            box-shadow: 2px 0 8px rgba(0, 0, 0, 0.05);
+            padding: 24px 0;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+        }
+
+        .sidebar-header {
+            padding: 0 24px 24px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 20px;
+            font-weight: 700;
+            color: #9c88ff;
+        }
+
+        .logo svg {
+            width: 32px;
+            height: 32px;
+        }
+
+        .nav-menu {
+            padding: 24px 0;
+        }
+
+        .nav-item {
+            padding: 12px 24px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #6b7280;
+            font-weight: 500;
+            text-decoration: none;
+        }
+
+        .nav-item:hover {
+            background-color: #f9fafb;
+            color: #9c88ff;
+        }
+
+        .nav-item.active {
+            background-color: #f5f3ff;
+            color: #9c88ff;
+            border-left: 3px solid #9c88ff;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-left: 280px;
+            flex: 1;
+            padding: 32px;
+        }
+
+        /* Header */
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 32px;
+        }
+
+        .page-header h1 {
+            font-size: 32px;
+            font-weight: 700;
+            color: #1d2428;
+        }
+
+        .btn-primary {
+            padding: 12px 24px;
+            background: #FF9F1C;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary:hover {
+            background: #e68e00;
+        }
+
+        /* Filter Tabs */
+        .filter-tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 24px;
+            border-bottom: 2px solid #e5e7eb;
+            padding-bottom: 0;
+        }
+
+        .filter-tab {
+            padding: 12px 24px;
+            background: transparent;
+            border: none;
+            border-bottom: 3px solid transparent;
+            font-size: 15px;
+            font-weight: 500;
+            color: #6b7280;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-bottom: -2px;
+        }
+
+        .filter-tab:hover {
+            color: #9c88ff;
+        }
+
+        .filter-tab.active {
+            color: #9c88ff;
+            border-bottom-color: #9c88ff;
+        }
+
+        .filter-tab .count {
+            display: inline-block;
+            margin-left: 8px;
+            padding: 2px 8px;
+            background: #f3f4f6;
+            border-radius: 12px;
+            font-size: 12px;
+        }
+
+        .filter-tab.active .count {
+            background: #f5f3ff;
+            color: #9c88ff;
+        }
+
+        /* Search & Filters */
+        .search-section {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 24px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .search-input {
+            flex: 1;
+            min-width: 250px;
+            padding: 10px 16px;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .search-input:focus {
+            border-color: #9c88ff;
+        }
+
+        .filter-select {
+            padding: 10px 16px;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 14px;
+            outline: none;
+            background: white;
+            cursor: pointer;
+        }
+
+        /* Recipe Grid */
+        .recipes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 24px;
+            margin-bottom: 40px;
+        }
+
+        .recipe-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s, box-shadow 0.2s;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .recipe-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+        }
+
+        .recipe-status {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+            z-index: 10;
+        }
+
+        .recipe-status.published {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .recipe-status.draft {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .recipe-image {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, #9c88ff 0%, #3bb78f 100%);
+            position: relative;
+        }
+
+        .recipe-content {
+            padding: 20px;
+        }
+
+        .recipe-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #1d2428;
+        }
+
+        .recipe-meta {
+            display: flex;
+            gap: 16px;
+            color: #6b7280;
+            font-size: 14px;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+        }
+
+        .recipe-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            padding-top: 12px;
+            border-top: 1px solid #f3f4f6;
+            margin-top: 12px;
+        }
+
+        .recipe-stat {
+            text-align: center;
+        }
+
+        .recipe-stat-value {
+            font-size: 16px;
+            font-weight: 700;
+            color: #9c88ff;
+            display: block;
+        }
+
+        .recipe-stat-label {
+            font-size: 11px;
+            color: #6b7280;
+            display: block;
+            margin-top: 2px;
+        }
+
+        .recipe-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        .btn-action {
+            flex: 1;
+            padding: 8px 12px;
+            border: 1px solid #e5e7eb;
+            background: white;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+        }
+
+        .btn-action:hover {
+            background: #f9fafb;
+            border-color: #9c88ff;
+            color: #9c88ff;
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 80px 32px;
+            background: white;
+            border-radius: 12px;
+        }
+
+        .empty-icon {
+            font-size: 64px;
+            margin-bottom: 16px;
+        }
+
+        .empty-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #1d2428;
+            margin-bottom: 8px;
+        }
+
+        .empty-text {
+            font-size: 16px;
+            color: #6b7280;
+            margin-bottom: 24px;
+        }
+
+        /* Stats Overview */
+        .stats-overview {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin-bottom: 32px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: #6b7280;
+            margin-bottom: 8px;
+        }
+
+        .stat-value {
+            font-size: 28px;
+            font-weight: 700;
+            color: #9c88ff;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 80px;
+            }
+
+            .logo span {
+                display: none;
+            }
+
+            .nav-item span:last-child {
+                display: none;
+            }
+
+            .main-content {
+                margin-left: 80px;
+                padding: 16px;
+            }
+
+            .recipes-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .page-header {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 16px;
+            }
+
+            .search-section {
+                flex-direction: column;
+            }
+
+            .stats-overview {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <svg width="32" height="32" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="50" cy="50" r="50" fill="#3bb78f"/>
+                        <path d="M 30 65 Q 35 35, 45 50 Q 50 58, 50 85 M 50 85 Q 50 58, 55 50 Q 65 35, 70 65" fill="#FF9F1C" stroke="none"/>
+                    </svg>
+                    <span>Akeli Diet</span>
+                </div>
+            </div>
+            <nav class="nav-menu">
+                <a href="#" class="nav-item">
+                    <span>📊</span>
+                    <span>Tableau de Bord</span>
+                </a>
+                <a href="#" class="nav-item active">
+                    <span>📚</span>
+                    <span>Mes Recettes</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <span>💰</span>
+                    <span>Revenus</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <span>👥</span>
+                    <span>Communauté</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <span>👤</span>
+                    <span>Profil</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <span>⚙️</span>
+                    <span>Paramètres</span>
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Page Header -->
+            <div class="page-header">
+                <div>
+                    <h1>Mes Recettes</h1>
+                    <p style="color: #6b7280; margin-top: 4px;">Gérez vos recettes et suivez leurs performances</p>
+                </div>
+                <button class="btn-primary">
+                    <span>+</span>
+                    <span>Créer une Recette</span>
+                </button>
+            </div>
+
+            <!-- Stats Overview -->
+            <div class="stats-overview">
+                <div class="stat-card">
+                    <div class="stat-label">Total Recettes</div>
+                    <div class="stat-value">15</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Publiées</div>
+                    <div class="stat-value" style="color: #3bb78f;">12</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Brouillons</div>
+                    <div class="stat-value" style="color: #FF9F1C;">3</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Revenus Total</div>
+                    <div class="stat-value">2,847€</div>
+                </div>
+            </div>
+
+            <!-- Filter Tabs -->
+            <div class="filter-tabs">
+                <button class="filter-tab active">
+                    Toutes
+                    <span class="count">15</span>
+                </button>
+                <button class="filter-tab">
+                    Publiées
+                    <span class="count">12</span>
+                </button>
+                <button class="filter-tab">
+                    Brouillons
+                    <span class="count">3</span>
+                </button>
+            </div>
+
+            <!-- Search & Filters -->
+            <div class="search-section">
+                <input type="text" class="search-input" placeholder="🔍 Rechercher une recette...">
+                <select class="filter-select">
+                    <option>Type de Repas</option>
+                    <option>Petit-déjeuner</option>
+                    <option>Déjeuner</option>
+                    <option>Dîner</option>
+                    <option>Snack</option>
+                </select>
+                <select class="filter-select">
+                    <option>Région</option>
+                    <option>Afrique de l'Ouest</option>
+                    <option>Afrique Centrale</option>
+                    <option>Afrique de l'Est</option>
+                    <option>Afrique du Nord</option>
+                    <option>Caraïbes</option>
+                </select>
+                <select class="filter-select">
+                    <option>Trier par</option>
+                    <option>Plus récentes</option>
+                    <option>Plus anciennes</option>
+                    <option>Plus de revenus</option>
+                    <option>Meilleures notes</option>
+                </select>
+            </div>
+
+            <!-- Recipes Grid -->
+            <div class="recipes-grid">
+                <!-- Published Recipe 1 -->
+                <div class="recipe-card">
+                    <span class="recipe-status published">✓ Publié</span>
+                    <div class="recipe-image"></div>
+                    <div class="recipe-content">
+                        <h3 class="recipe-title">Thiéboudienne Rouge</h3>
+                        <div class="recipe-meta">
+                            <span>🍽️ Afrique de l'Ouest</span>
+                            <span>⏱️ 1h 30min</span>
+                            <span>👨‍🍳 Dîner</span>
+                        </div>
+                        <div class="recipe-stats">
+                            <div class="recipe-stat">
+                                <span class="recipe-stat-value">341</span>
+                                <span class="recipe-stat-label">Consommateurs</span>
+                            </div>
+                            <div class="recipe-stat">
+                                <span class="recipe-stat-value">345€</span>
+                                <span class="recipe-stat-label">Revenus</span>
+                            </div>
+                            <div class="recipe-stat">
+                                <span class="recipe-stat-value">4.8</span>
+                                <span class="recipe-stat-label">⭐ Note</span>
+                            </div>
+                        </div>
+                        <div class="recipe-actions">
+                            <button class="btn-action">👁️ Voir</button>
+                            <button class="btn-action">✏️ Modifier</button>
+                            <button class="btn-action">📊 Stats</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Published Recipe 2 -->
+                <div class="recipe-card">
+                    <span class="recipe-status published">✓ Publié</span>
+                    <div class="recipe-image" style="background: linear-gradient(135deg, #FF9F1C 0%, #3bb78f 100%);"></div>
+                    <div class="recipe-content">
+                        <h3 class="recipe-title">Accras de Morue</h3>
+                        <div class="recipe-meta">
+                            <span>🍽️ Antilles</span>
+                            <span>⏱️ 45 min</span>
+                            <span>👨‍🍳 Déjeuner</span>
+                        </div>
+                        <div class="recipe-stats">
+                            <div class="recipe-stat">
+                                <span class="recipe-stat-value">156</span>
+                                <span class="recipe-stat-label">Consommateurs</span>
+                            </div>
+                            <div class="recipe-stat">
+                                <span class="recipe-stat-value">156€</span>
+                                <span class="recipe-stat-label">Revenus</span>
+                            </div>
+                            <div class="recipe-stat">
+                                <span class="recipe-stat-value">4.9</span>
+                                <span class="recipe-stat-label">⭐ Note</span>
+                            </div>
+                        </div>
+                        <div class="recipe-actions">
+                            <button class="btn-action">👁️ Voir</button>
+                            <button class="btn-action">✏️ Modifier</button>
+                            <button class="btn-action">📊 Stats</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Published Recipe 3 -->
+                <div class="recipe-card">
+                    <span class="recipe-status published">✓ Publié</span>
+                    <div class="recipe-image" style="background: linear-gradient(135deg, #3bb78f 0%, #9c88ff 100%);"></div>
+                    <div class="recipe-content">
+                        <h3 class="recipe-title">Poulet DG</h3>
+                        <div class="recipe-meta">
+                            <span>🍽️ Cameroun</span>
+                            <span>⏱️ 1h 15min</span>
+                            <span>👨‍🍳 Dîner</span>
+                        </div>
+                        <div class="recipe-stats">
+                            <div class="recipe-stat">
+                                <span class="recipe-stat-value">104</span>
+                                <span class="recipe-stat-label">Consommateurs</span>
+                            </div>
+                            <div class="recipe-stat">
+                                <span class="recipe-stat-value">104€</span>
+                                <span class="recipe-stat-label">Revenus</span>
+                            </div>
+                            <div class="recipe-stat">
+                                <span class="recipe-stat-value">4.6</span>
+                                <span class="recipe-stat-label">⭐ Note</span>
+                            </div>
+                        </div>
+                        <div class="recipe-actions">
+                            <button class="btn-action">👁️ Voir</button>
+                            <button class="btn-action">✏️ Modifier</button>
+                            <button class="btn-action">📊 Stats</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Draft Recipe -->
+                <div class="recipe-card">
+                    <span class="recipe-status draft">📝 Brouillon</span>
+                    <div class="recipe-image" style="background: linear-gradient(135deg, #9c88ff 0%, #FF9F1C 100%);"></div>
+                    <div class="recipe-content">
+                        <h3 class="recipe-title">Mafé au Poulet</h3>
+                        <div class="recipe-meta">
+                            <span>🍽️ Mali</span>
+                            <span>⏱️ 1h 10min</span>
+                            <span>👨‍🍳 Dîner</span>
+                        </div>
+                        <div style="padding: 12px; background: #fef3c7; border-radius: 8px; margin: 12px 0;">
+                            <p style="font-size: 13px; color: #92400e;">
+                                <strong>Complétude: 70%</strong><br>
+                                Ajoutez des photos pour améliorer la visibilité
+                            </p>
+                        </div>
+                        <div class="recipe-actions">
+                            <button class="btn-action">✏️ Continuer</button>
+                            <button class="btn-action">🗑️ Supprimer</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- More recipes... -->
+                <div class="recipe-card">
+                    <span class="recipe-status published">✓ Publié</span>
+                    <div class="recipe-image" style="background: linear-gradient(135deg, #FF9F1C 0%, #9c88ff 100%);"></div>
+                    <div class="recipe-content">
+                        <h3 class="recipe-title">Jollof Rice</h3>
+                        <div class="recipe-meta">
+                            <span>🍽️ Nigeria</span>
+                            <span>⏱️ 50 min</span>
+                            <span>👨‍🍳 Dîner</span>
+                        </div>
+                        <div class="recipe-stats">
+                            <div class="recipe-stat">
+                                <span class="recipe-stat-value">287</span>
+                                <span class="recipe-stat-label">Consommateurs</span>
+                            </div>
+                            <div class="recipe-stat">
+                                <span class="recipe-stat-value">287€</span>
+                                <span class="recipe-stat-label">Revenus</span>
+                            </div>
+                            <div class="recipe-stat">
+                                <span class="recipe-stat-value">4.7</span>
+                                <span class="recipe-stat-label">⭐ Note</span>
+                            </div>
+                        </div>
+                        <div class="recipe-actions">
+                            <button class="btn-action">👁️ Voir</button>
+                            <button class="btn-action">✏️ Modifier</button>
+                            <button class="btn-action">📊 Stats</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="recipe-card">
+                    <span class="recipe-status published">✓ Publié</span>
+                    <div class="recipe-image" style="background: linear-gradient(135deg, #3bb78f 0%, #FF9F1C 100%);"></div>
+                    <div class="recipe-content">
+                        <h3 class="recipe-title">Yassa Poulet</h3>
+                        <div class="recipe-meta">
+                            <span>🍽️ Sénégal</span>
+                            <span>⏱️ 1h 20min</span>
+                            <span>👨‍🍳 Dîner</span>
+                        </div>
+                        <div class="recipe-stats">
+                            <div class="recipe-stat">
+                                <span class="recipe-stat-value">198</span>
+                                <span class="recipe-stat-label">Consommateurs</span>
+                            </div>
+                            <div class="recipe-stat">
+                                <span class="recipe-stat-value">198€</span>
+                                <span class="recipe-stat-label">Revenus</span>
+                            </div>
+                            <div class="recipe-stat">
+                                <span class="recipe-stat-value">4.8</span>
+                                <span class="recipe-stat-label">⭐ Note</span>
+                            </div>
+                        </div>
+                        <div class="recipe-actions">
+                            <button class="btn-action">👁️ Voir</button>
+                            <button class="btn-action">✏️ Modifier</button>
+                            <button class="btn-action">📊 Stats</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+</html>

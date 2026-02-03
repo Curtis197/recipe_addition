@@ -1,0 +1,1135 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guide du Créateur - Akeli Diet</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: #f1f4f8;
+            color: #1d2428;
+            line-height: 1.6;
+        }
+
+        .container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 280px;
+            background: white;
+            box-shadow: 2px 0 8px rgba(0, 0, 0, 0.05);
+            padding: 24px 0;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+        }
+
+        .sidebar-header {
+            padding: 0 24px 24px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 20px;
+            font-weight: 700;
+            color: #9c88ff;
+        }
+
+        .logo svg {
+            width: 32px;
+            height: 32px;
+        }
+
+        /* Table of Contents in Sidebar */
+        .toc {
+            padding: 24px 0;
+        }
+
+        .toc-title {
+            padding: 0 24px 12px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #6b7280;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .toc-item {
+            padding: 10px 24px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: block;
+            color: #6b7280;
+            font-size: 14px;
+            text-decoration: none;
+        }
+
+        .toc-item:hover {
+            background-color: #f9fafb;
+            color: #9c88ff;
+        }
+
+        .toc-item.active {
+            background-color: #f5f3ff;
+            color: #9c88ff;
+            border-left: 3px solid #9c88ff;
+            font-weight: 500;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-left: 280px;
+            flex: 1;
+            padding: 40px 60px;
+            max-width: 1200px;
+        }
+
+        /* Header */
+        .page-header {
+            margin-bottom: 48px;
+        }
+
+        .page-title {
+            font-size: 42px;
+            font-weight: 800;
+            color: #1d2428;
+            margin-bottom: 12px;
+        }
+
+        .page-subtitle {
+            font-size: 20px;
+            color: #6b7280;
+        }
+
+        /* Section */
+        .section {
+            margin-bottom: 64px;
+        }
+
+        .section-title {
+            font-size: 32px;
+            font-weight: 700;
+            color: #1d2428;
+            margin-bottom: 24px;
+            padding-bottom: 12px;
+            border-bottom: 3px solid #9c88ff;
+        }
+
+        .section-subtitle {
+            font-size: 24px;
+            font-weight: 600;
+            color: #1d2428;
+            margin: 32px 0 16px;
+        }
+
+        .section-content {
+            font-size: 16px;
+            color: #4b5563;
+            line-height: 1.8;
+        }
+
+        .section-content p {
+            margin-bottom: 16px;
+        }
+
+        .section-content ul, .section-content ol {
+            margin: 16px 0 16px 24px;
+        }
+
+        .section-content li {
+            margin-bottom: 8px;
+        }
+
+        /* Highlight Box */
+        .highlight-box {
+            background: linear-gradient(135deg, #9c88ff 0%, #3bb78f 100%);
+            color: white;
+            padding: 32px;
+            border-radius: 12px;
+            margin: 32px 0;
+        }
+
+        .highlight-box h3 {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+
+        .highlight-box p {
+            font-size: 16px;
+            line-height: 1.6;
+            opacity: 0.95;
+        }
+
+        /* Info Box */
+        .info-box {
+            background: white;
+            border-left: 4px solid #9c88ff;
+            padding: 24px;
+            border-radius: 8px;
+            margin: 24px 0;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+
+        .info-box.success {
+            border-left-color: #3bb78f;
+        }
+
+        .info-box.warning {
+            border-left-color: #FF9F1C;
+            background: #fffbf0;
+        }
+
+        .info-box-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1d2428;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .info-box-content {
+            font-size: 15px;
+            color: #4b5563;
+            line-height: 1.6;
+        }
+
+        /* Steps */
+        .steps {
+            counter-reset: step-counter;
+            margin: 24px 0;
+        }
+
+        .step {
+            counter-increment: step-counter;
+            padding-left: 60px;
+            position: relative;
+            margin-bottom: 32px;
+        }
+
+        .step::before {
+            content: counter(step-counter);
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #9c88ff, #3bb78f);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 18px;
+        }
+
+        .step-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1d2428;
+            margin-bottom: 8px;
+        }
+
+        .step-content {
+            font-size: 15px;
+            color: #4b5563;
+            line-height: 1.6;
+        }
+
+        /* Revenue Calculator */
+        .calculator {
+            background: white;
+            padding: 32px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            margin: 32px 0;
+        }
+
+        .calculator-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #1d2428;
+            margin-bottom: 24px;
+        }
+
+        .calculator-examples {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .calculator-example {
+            text-align: center;
+            padding: 20px;
+            background: #f9fafb;
+            border-radius: 8px;
+        }
+
+        .calculator-value {
+            font-size: 32px;
+            font-weight: 800;
+            color: #9c88ff;
+            margin-bottom: 8px;
+        }
+
+        .calculator-label {
+            font-size: 14px;
+            color: #6b7280;
+            margin-bottom: 4px;
+        }
+
+        .calculator-result {
+            font-size: 20px;
+            font-weight: 700;
+            color: #3bb78f;
+            margin-top: 8px;
+        }
+
+        /* Best Practices Grid */
+        .best-practices-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+            margin: 24px 0;
+        }
+
+        .practice-card {
+            background: white;
+            padding: 24px;
+            border-radius: 12px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+
+        .practice-icon {
+            font-size: 36px;
+            margin-bottom: 12px;
+        }
+
+        .practice-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1d2428;
+            margin-bottom: 8px;
+        }
+
+        .practice-description {
+            font-size: 14px;
+            color: #6b7280;
+            line-height: 1.6;
+        }
+
+        /* FAQ */
+        .faq {
+            margin: 24px 0;
+        }
+
+        .faq-item {
+            background: white;
+            padding: 24px;
+            border-radius: 8px;
+            margin-bottom: 16px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+
+        .faq-question {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1d2428;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .faq-answer {
+            font-size: 15px;
+            color: #4b5563;
+            line-height: 1.6;
+        }
+
+        /* Table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 24px 0;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+
+        th {
+            background: #f9fafb;
+            padding: 16px;
+            text-align: left;
+            font-weight: 600;
+            color: #1d2428;
+            border-bottom: 2px solid #e5e7eb;
+        }
+
+        td {
+            padding: 16px;
+            border-bottom: 1px solid #f3f4f6;
+            color: #4b5563;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* CTA Box */
+        .cta-box {
+            background: linear-gradient(135deg, #FF9F1C 0%, #9c88ff 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 12px;
+            text-align: center;
+            margin: 48px 0;
+        }
+
+        .cta-box h3 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .cta-box p {
+            font-size: 16px;
+            margin-bottom: 24px;
+            opacity: 0.95;
+        }
+
+        .cta-button {
+            padding: 14px 32px;
+            background: white;
+            color: #9c88ff;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .sidebar {
+                display: none;
+            }
+
+            .main-content {
+                margin-left: 0;
+                padding: 24px 20px;
+            }
+
+            .page-title {
+                font-size: 32px;
+            }
+
+            .section-title {
+                font-size: 24px;
+            }
+
+            .calculator-examples {
+                grid-template-columns: 1fr;
+            }
+
+            .best-practices-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar TOC -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <svg width="32" height="32" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="50" cy="50" r="50" fill="#3bb78f"/>
+                        <path d="M 30 65 Q 35 35, 45 50 Q 50 58, 50 85 M 50 85 Q 50 58, 55 50 Q 65 35, 70 65" fill="#FF9F1C" stroke="none"/>
+                    </svg>
+                    <span>Akeli Diet</span>
+                </div>
+            </div>
+            <nav class="toc">
+                <div class="toc-title">Sommaire</div>
+                <a href="#introduction" class="toc-item active">Introduction</a>
+                <a href="#comment-ca-marche" class="toc-item">Comment ça marche</a>
+                <a href="#remuneration" class="toc-item">Rémunération</a>
+                <a href="#creer-recette" class="toc-item">Créer une recette</a>
+                <a href="#bonnes-pratiques" class="toc-item">Bonnes pratiques</a>
+                <a href="#optimisation" class="toc-item">Optimiser vos gains</a>
+                <a href="#paiements" class="toc-item">Paiements</a>
+                <a href="#faq" class="toc-item">FAQ</a>
+                <a href="#support" class="toc-item">Support</a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <div class="page-header">
+                <h1 class="page-title">Guide du Créateur</h1>
+                <p class="page-subtitle">Tout ce que vous devez savoir pour créer et partager vos recettes sur Akeli Diet</p>
+            </div>
+
+            <!-- Introduction -->
+            <section id="introduction" class="section">
+                <h2 class="section-title">Introduction</h2>
+                <div class="section-content">
+                    <div class="highlight-box">
+                        <h3>🌟 Bienvenue dans la Révolution Culinaire</h3>
+                        <p>
+                            Akeli Diet est <strong>la première plateforme au monde à rémunérer les créateurs de recettes</strong>.
+                            Nous croyons que votre savoir culinaire et votre héritage culturel ont une valeur réelle.
+                            Chaque recette que vous partagez aide à préserver et adapter la cuisine de la diaspora africaine
+                            pour la vie urbaine moderne, tout en vous permettant de générer des revenus.
+                        </p>
+                    </div>
+
+                    <p>
+                        Sur Akeli Diet, vous êtes plus qu'un simple créateur - vous êtes un <strong>ambassadeur culturel</strong>
+                        qui partage son héritage tout en gagnant de l'argent. Pas besoin de milliers de followers, pas d'attente
+                        pour l'approbation de vos recettes, juste de bonnes recettes authentiques.
+                    </p>
+                </div>
+            </section>
+
+            <!-- Comment ça marche -->
+            <section id="comment-ca-marche" class="section">
+                <h2 class="section-title">Comment ça marche</h2>
+                <div class="section-content">
+                    <div class="steps">
+                        <div class="step">
+                            <div class="step-title">Créez votre compte créateur</div>
+                            <div class="step-content">
+                                Inscrivez-vous avec votre email et configurez votre compte Stripe pour recevoir vos paiements.
+                                Le processus est simple et sécurisé.
+                            </div>
+                        </div>
+
+                        <div class="step">
+                            <div class="step-title">Publiez vos recettes</div>
+                            <div class="step-content">
+                                Partagez vos recettes traditionnelles ou modernes. Ajoutez des photos, des ingrédients détaillés,
+                                et des instructions claires. <strong>Publication instantanée</strong> - pas d'approbation nécessaire!
+                            </div>
+                        </div>
+
+                        <div class="step">
+                            <div class="step-title">Les utilisateurs cuisinent vos plats</div>
+                            <div class="step-content">
+                                Vos recettes apparaissent dans l'application Akeli Diet. Les utilisateurs les découvrent,
+                                les cuisinent, et valident leur consommation dans l'app.
+                            </div>
+                        </div>
+
+                        <div class="step">
+                            <div class="step-title">Gagnez de l'argent automatiquement</div>
+                            <div class="step-content">
+                                Chaque fois qu'un utilisateur valide un repas préparé avec votre recette, vous gagnez <strong>1€</strong>.
+                                Les paiements sont automatiques le 1er de chaque mois via Stripe.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Rémunération -->
+            <section id="remuneration" class="section">
+                <h2 class="section-title">Modèle de Rémunération</h2>
+                <div class="section-content">
+                    <div class="info-box success">
+                        <div class="info-box-title">💰 Principe Simple</div>
+                        <div class="info-box-content">
+                            <strong>1 Consommateur Quotidien = 1€</strong><br><br>
+                            Peu importe si un utilisateur cuisine 1, 2 ou 3 de vos recettes dans la même journée -
+                            vous gagnez toujours 1€ par personne par jour.
+                        </div>
+                    </div>
+
+                    <h3 class="section-subtitle">Comment ça fonctionne concrètement</h3>
+                    <p>
+                        Le système compte les <strong>consommateurs quotidiens uniques</strong>.
+                        Voici quelques exemples pour mieux comprendre:
+                    </p>
+
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Jour</th>
+                                <th>Activité</th>
+                                <th>Vos Gains</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Lundi</td>
+                                <td>Marie cuisine votre petit-déjeuner, déjeuner ET dîner</td>
+                                <td><strong>1€</strong></td>
+                            </tr>
+                            <tr>
+                                <td>Mardi</td>
+                                <td>Marie cuisine seulement votre dîner</td>
+                                <td><strong>1€</strong></td>
+                            </tr>
+                            <tr>
+                                <td>Mercredi</td>
+                                <td>Marie cuisine votre déjeuner + Paul cuisine votre dîner</td>
+                                <td><strong>2€</strong> (2 personnes)</td>
+                            </tr>
+                            <tr>
+                                <td>Jeudi</td>
+                                <td>Marie cuisine le petit-déj du Créateur A + votre déjeuner</td>
+                                <td><strong>1€</strong> (vous) + Créateur A gagne aussi 1€</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="calculator">
+                        <h3 class="calculator-title">💡 Simulateur de Revenus</h3>
+                        <div class="calculator-examples">
+                            <div class="calculator-example">
+                                <div class="calculator-value">10</div>
+                                <div class="calculator-label">consommateurs/jour</div>
+                                <div class="calculator-result">≈ 300€/mois</div>
+                            </div>
+                            <div class="calculator-example">
+                                <div class="calculator-value">30</div>
+                                <div class="calculator-label">consommateurs/jour</div>
+                                <div class="calculator-result">≈ 900€/mois</div>
+                            </div>
+                            <div class="calculator-example">
+                                <div class="calculator-value">50</div>
+                                <div class="calculator-label">consommateurs/jour</div>
+                                <div class="calculator-result">≈ 1,500€/mois</div>
+                            </div>
+                            <div class="calculator-example">
+                                <div class="calculator-value">100</div>
+                                <div class="calculator-label">consommateurs/jour</div>
+                                <div class="calculator-result">≈ 3,000€/mois</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="info-box">
+                        <div class="info-box-title">📊 Suivez vos performances en temps réel</div>
+                        <div class="info-box-content">
+                            Votre tableau de bord vous montre quotidiennement vos consommateurs,
+                            vos gains du jour, et une projection pour le mois en cours.
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Créer une recette -->
+            <section id="creer-recette" class="section">
+                <h2 class="section-title">Créer une Recette</h2>
+                <div class="section-content">
+                    <h3 class="section-subtitle">Informations Requises</h3>
+                    <p>Pour créer une recette complète sur Akeli Diet, voici les éléments nécessaires:</p>
+
+                    <ul>
+                        <li><strong>Titre de la recette</strong> - Clair et descriptif (ex: "Thiéboudienne Rouge Traditionnelle")</li>
+                        <li><strong>Description</strong> - Présentez votre plat en quelques phrases</li>
+                        <li><strong>Type de repas</strong> - Petit-déjeuner, Déjeuner, Dîner, ou Snack</li>
+                        <li><strong>Région/Origine</strong> - Afrique de l'Ouest, Caraïbes, etc.</li>
+                        <li><strong>Temps de préparation</strong> - En heures et minutes</li>
+                        <li><strong>Nombre de portions</strong> - Pour combien de personnes</li>
+                    </ul>
+
+                    <h3 class="section-subtitle">Liste des Ingrédients</h3>
+                    <p>
+                        Pour chaque ingrédient, indiquez:
+                    </p>
+                    <ul>
+                        <li>Le nom de l'ingrédient</li>
+                        <li>La quantité précise (nombre + unité)</li>
+                        <li>L'unité de mesure (grammes, cuillères, tasses, etc.)</li>
+                    </ul>
+
+                    <div class="info-box warning">
+                        <div class="info-box-title">💡 Conseil</div>
+                        <div class="info-box-content">
+                            Organisez vos ingrédients par catégorie (légumes, épices, protéines) pour faciliter
+                            la lecture et la préparation.
+                        </div>
+                    </div>
+
+                    <h3 class="section-subtitle">Instructions de Préparation</h3>
+                    <p>
+                        Détaillez chaque étape de manière claire et numérotée:
+                    </p>
+                    <ul>
+                        <li>Une action par étape</li>
+                        <li>Instructions précises (température, durée, technique)</li>
+                        <li>Conseils pratiques si nécessaire</li>
+                    </ul>
+
+                    <h3 class="section-subtitle">Photos et Médias</h3>
+                    <div class="info-box success">
+                        <div class="info-box-title">📸 Les photos augmentent vos gains de 40%!</div>
+                        <div class="info-box-content">
+                            <ul style="margin: 8px 0 0 16px;">
+                                <li>Ajoutez au moins 1 photo du plat fini</li>
+                                <li>Photos supplémentaires des étapes clés (optionnel mais recommandé)</li>
+                                <li>Assurez-vous que les photos soient nettes et bien éclairées</li>
+                                <li>Format: JPG ou PNG, max 5MB par photo</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <h3 class="section-subtitle">Informations Optionnelles (mais recommandées)</h3>
+                    <p>Ces éléments ne sont pas obligatoires mais augmentent significativement vos performances:</p>
+                    <ul>
+                        <li><strong>Informations nutritionnelles</strong> - Calories, protéines, glucides, lipides</li>
+                        <li><strong>Tags diététiques</strong> - Végétarien, Sans gluten, Halal, etc.</li>
+                        <li><strong>Niveau de difficulté</strong> - Facile, Moyen, Difficile</li>
+                        <li><strong>Histoire/Contexte</strong> - Pourquoi cette recette est spéciale pour vous</li>
+                        <li><strong>Substitutions possibles</strong> - Alternatives pour certains ingrédients</li>
+                        <li><strong>Conseils de conservation</strong> - Comment conserver les restes</li>
+                    </ul>
+
+                    <div class="info-box">
+                        <div class="info-box-title">⚡ Publication Instantanée</div>
+                        <div class="info-box-content">
+                            Une fois votre recette créée, cliquez sur "Publier" et elle sera immédiatement
+                            visible dans l'app Akeli Diet. Pas d'attente, pas d'approbation!
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Bonnes pratiques -->
+            <section id="bonnes-pratiques" class="section">
+                <h2 class="section-title">Bonnes Pratiques</h2>
+                <div class="section-content">
+                    <p>
+                        Voici nos recommandations basées sur l'analyse de milliers de recettes performantes:
+                    </p>
+
+                    <div class="best-practices-grid">
+                        <div class="practice-card">
+                            <div class="practice-icon">🎯</div>
+                            <h3 class="practice-title">Soyez Authentique</h3>
+                            <p class="practice-description">
+                                Les recettes traditionnelles et authentiques performent 30% mieux.
+                                N'ayez pas peur de partager les vraies recettes familiales!
+                            </p>
+                        </div>
+
+                        <div class="practice-card">
+                            <div class="practice-icon">📝</div>
+                            <h3 class="practice-title">Instructions Claires</h3>
+                            <p class="practice-description">
+                                Des étapes précises et faciles à suivre rassurent les utilisateurs
+                                et augmentent le taux de réalisation de la recette.
+                            </p>
+                        </div>
+
+                        <div class="practice-card">
+                            <div class="practice-icon">⏱️</div>
+                            <h3 class="practice-title">Temps Réaliste</h3>
+                            <p class="practice-description">
+                                Indiquez le temps réel de préparation. Les utilisateurs apprécient
+                                l'honnêteté et planifient mieux leurs repas.
+                            </p>
+                        </div>
+
+                        <div class="practice-card">
+                            <div class="practice-icon">🌍</div>
+                            <h3 class="practice-title">Contexte Culturel</h3>
+                            <p class="practice-description">
+                                Expliquez l'origine du plat, les occasions spéciales, ou l'histoire
+                                familiale. Les utilisateurs adorent apprendre!
+                            </p>
+                        </div>
+
+                        <div class="practice-card">
+                            <div class="practice-icon">🔄</div>
+                            <h3 class="practice-title">Alternatives</h3>
+                            <p class="practice-description">
+                                Proposez des substitutions pour les ingrédients difficiles à trouver
+                                en ville. Augmente l'accessibilité de votre recette.
+                            </p>
+                        </div>
+
+                        <div class="practice-card">
+                            <div class="practice-icon">📊</div>
+                            <h3 class="practice-title">Diversifiez</h3>
+                            <p class="practice-description">
+                                Publiez des recettes pour différents moments de la journée.
+                                Un portefeuille varié génère plus de revenus.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Optimisation -->
+            <section id="optimisation" class="section">
+                <h2 class="section-title">Optimiser vos Gains</h2>
+                <div class="section-content">
+                    <h3 class="section-subtitle">Stratégies Éprouvées</h3>
+
+                    <div class="info-box success">
+                        <div class="info-box-title">🚀 Créez un Portefeuille Complet</div>
+                        <div class="info-box-content">
+                            Les créateurs avec <strong>15+ recettes variées</strong> gagnent en moyenne
+                            <strong>3x plus</strong> que ceux avec seulement quelques recettes.
+                        </div>
+                    </div>
+
+                    <ul>
+                        <li><strong>Couvrez tous les repas</strong> - Au minimum 3-4 options pour le petit-déjeuner, déjeuner et dîner</li>
+                        <li><strong>Recettes rapides ET élaborées</strong> - Mix de plats 15-30 min et plats du dimanche</li>
+                        <li><strong>Options végétariennes</strong> - 20% des utilisateurs cherchent des alternatives sans viande</li>
+                        <li><strong>Plats meal-prep friendly</strong> - Les recettes qui se conservent bien sont très populaires</li>
+                        <li><strong>Recettes de saison</strong> - Publiez des plats adaptés aux saisons actuelles</li>
+                    </ul>
+
+                    <h3 class="section-subtitle">Jours de Pic</h3>
+                    <p>
+                        Les données montrent que les consommations sont plus élevées:
+                    </p>
+                    <ul>
+                        <li><strong>Dimanche</strong> - Les utilisateurs cuisinent pour la semaine (+40% de consommations)</li>
+                        <li><strong>Mercredi</strong> - Mi-semaine, besoin de renouveler les repas</li>
+                        <li><strong>Début de mois</strong> - Nouvel élan, nouvelles résolutions</li>
+                    </ul>
+
+                    <div class="info-box">
+                        <div class="info-box-title">💡 Astuce</div>
+                        <div class="info-box-content">
+                            Publiez vos nouvelles recettes le <strong>vendredi ou samedi</strong> pour
+                            maximiser la visibilité pendant le pic du dimanche.
+                        </div>
+                    </div>
+
+                    <h3 class="section-subtitle">Répondez aux Commentaires</h3>
+                    <p>
+                        Les utilisateurs d'Akeli Diet peuvent commenter vos recettes.
+                        Les créateurs qui répondent aux commentaires voient:
+                    </p>
+                    <ul>
+                        <li>+25% de fidélisation (utilisateurs qui reviennent)</li>
+                        <li>Meilleures notes moyennes</li>
+                        <li>Plus de confiance = plus de consommations</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Paiements -->
+            <section id="paiements" class="section">
+                <h2 class="section-title">Paiements</h2>
+                <div class="section-content">
+                    <h3 class="section-subtitle">Configuration du Compte Stripe</h3>
+                    <p>
+                        Pour recevoir vos paiements, vous devez configurer un compte Stripe Connect.
+                        C'est simple, sécurisé, et ne prend que quelques minutes:
+                    </p>
+
+                    <ol>
+                        <li>Cliquez sur "Configurer les paiements" dans votre tableau de bord</li>
+                        <li>Vous serez redirigé vers Stripe (plateforme de paiement sécurisée)</li>
+                        <li>Remplissez vos informations bancaires</li>
+                        <li>Vérifiez votre identité (document d'identité requis)</li>
+                        <li>Une fois approuvé, vous êtes prêt à recevoir des paiements!</li>
+                    </ol>
+
+                    <div class="info-box warning">
+                        <div class="info-box-title">⚠️ Important</div>
+                        <div class="info-box-content">
+                            Vous ne pouvez pas recevoir de paiements tant que votre compte Stripe
+                            n'est pas configuré. Vos gains sont conservés et vous seront versés
+                            dès la configuration terminée.
+                        </div>
+                    </div>
+
+                    <h3 class="section-subtitle">Calendrier des Paiements</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Période</th>
+                                <th>Date de Paiement</th>
+                                <th>Montant</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1-31 Janvier</td>
+                                <td>1er Février</td>
+                                <td>Total des gains de janvier</td>
+                            </tr>
+                            <tr>
+                                <td>1-28/29 Février</td>
+                                <td>1er Mars</td>
+                                <td>Total des gains de février</td>
+                            </tr>
+                            <tr>
+                                <td>Et ainsi de suite...</td>
+                                <td>1er du mois suivant</td>
+                                <td>Gains du mois précédent</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="info-box success">
+                        <div class="info-box-title">💰 Aucun Minimum de Retrait</div>
+                        <div class="info-box-content">
+                            Contrairement à d'autres plateformes, il n'y a <strong>aucun montant minimum</strong>
+                            pour recevoir votre paiement. Même 1€ gagné sera versé le 1er du mois suivant.
+                        </div>
+                    </div>
+
+                    <h3 class="section-subtitle">Historique et Justificatifs</h3>
+                    <p>
+                        Votre tableau de bord "Revenus" affiche:
+                    </p>
+                    <ul>
+                        <li>Historique complet de tous vos paiements</li>
+                        <li>Détail jour par jour de vos consommateurs</li>
+                        <li>Statut de chaque paiement (en attente, traité, versé)</li>
+                        <li>Téléchargement de justificatifs pour votre comptabilité</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- FAQ -->
+            <section id="faq" class="section">
+                <h2 class="section-title">Questions Fréquentes (FAQ)</h2>
+                <div class="section-content">
+                    <div class="faq">
+                        <div class="faq-item">
+                            <div class="faq-question">
+                                ❓ Mes recettes doivent-elles être approuvées avant publication?
+                            </div>
+                            <div class="faq-answer">
+                                <strong>Non!</strong> La publication est instantanée. Dès que vous cliquez sur "Publier",
+                                votre recette est visible dans l'app Akeli Diet. Pas d'attente, pas de modération.
+                            </div>
+                        </div>
+
+                        <div class="faq-item">
+                            <div class="faq-question">
+                                ❓ Puis-je modifier une recette déjà publiée?
+                            </div>
+                            <div class="faq-answer">
+                                <strong>Oui, à tout moment!</strong> Vous pouvez modifier vos recettes publiées
+                                (corriger une erreur, ajouter des photos, améliorer les instructions).
+                                Important: les modifications n'affectent pas vos gains passés.
+                            </div>
+                        </div>
+
+                        <div class="faq-item">
+                            <div class="faq-question">
+                                ❓ Que se passe-t-il si je dépublie une recette?
+                            </div>
+                            <div class="faq-answer">
+                                Si vous dépubliez une recette, elle disparaît immédiatement d'Akeli Diet.
+                                <strong>Attention:</strong> vous perdrez les gains du mois en cours pour cette recette,
+                                mais vos gains des mois précédents restent acquis.
+                            </div>
+                        </div>
+
+                        <div class="faq-item">
+                            <div class="faq-question">
+                                ❓ Comment savoir si ma recette performe bien?
+                            </div>
+                            <div class="faq-answer">
+                                Votre tableau de bord vous montre en temps réel les consommateurs quotidiens par recette,
+                                les revenus générés, et les notes des utilisateurs. Consultez aussi la section "Analytics"
+                                de chaque recette pour des insights détaillés.
+                            </div>
+                        </div>
+
+                        <div class="faq-item">
+                            <div class="faq-question">
+                                ❓ Puis-je publier la recette de quelqu'un d'autre?
+                            </div>
+                            <div class="faq-answer">
+                                Vous devez avoir le droit de partager la recette. Les recettes familiales transmises
+                                oralement sont OK. Évitez de copier exactement des recettes publiées dans des livres
+                                sous copyright. Inspirez-vous et adaptez avec vos propres mots.
+                            </div>
+                        </div>
+
+                        <div class="faq-item">
+                            <div class="faq-question">
+                                ❓ Y a-t-il un nombre maximum de recettes que je peux publier?
+                            </div>
+                            <div class="faq-answer">
+                                <strong>Non, aucune limite!</strong> Publiez autant de recettes que vous le souhaitez.
+                                Plus vous avez de recettes variées, plus vous avez de chances de générer des revenus.
+                            </div>
+                        </div>
+
+                        <div class="faq-item">
+                            <div class="faq-question">
+                                ❓ Les utilisateurs peuvent-ils voir mon identité complète?
+                            </div>
+                            <div class="faq-answer">
+                                Les utilisateurs voient uniquement votre nom de créateur, votre bio publique,
+                                et votre région d'origine. Vos informations personnelles (email, téléphone, adresse,
+                                infos bancaires) restent privées.
+                            </div>
+                        </div>
+
+                        <div class="faq-item">
+                            <div class="faq-question">
+                                ❓ Que faire si un utilisateur laisse un commentaire négatif?
+                            </div>
+                            <div class="faq-answer">
+                                Répondez poliment et professionnellement. Demandez des précisions pour comprendre
+                                le problème. Si le commentaire est abusif ou inapproprié, signalez-le à notre équipe
+                                support@akelidiet.com.
+                            </div>
+                        </div>
+
+                        <div class="faq-item">
+                            <div class="faq-question">
+                                ❓ Akeli Diet prend-il des frais sur mes revenus?
+                            </div>
+                            <div class="faq-answer">
+                                <strong>Non!</strong> Les frais Stripe sont à notre charge. Vous recevez l'intégralité
+                                de vos gains (1€ par consommateur quotidien).
+                            </div>
+                        </div>
+
+                        <div class="faq-item">
+                            <div class="faq-question">
+                                ❓ Puis-je voir qui a cuisiné mes recettes?
+                            </div>
+                            <div class="faq-answer">
+                                Pour des raisons de confidentialité, vous voyez uniquement le nombre de consommateurs
+                                quotidiens, pas les identités individuelles. Vous pouvez voir les commentaires publics
+                                avec les prénoms des utilisateurs.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Support -->
+            <section id="support" class="section">
+                <h2 class="section-title">Support & Contact</h2>
+                <div class="section-content">
+                    <h3 class="section-subtitle">Besoin d'Aide?</h3>
+                    <p>Notre équipe est là pour vous accompagner:</p>
+
+                    <div class="best-practices-grid">
+                        <div class="practice-card">
+                            <div class="practice-icon">📧</div>
+                            <h3 class="practice-title">Email</h3>
+                            <p class="practice-description">
+                                <strong>creators@akelidiet.com</strong><br>
+                                Réponse sous 24-48h
+                            </p>
+                        </div>
+
+                        <div class="practice-card">
+                            <div class="practice-icon">👥</div>
+                            <h3 class="practice-title">Communauté</h3>
+                            <p class="practice-description">
+                                Rejoignez les groupes de discussion pour poser vos questions
+                                et apprendre des autres créateurs.
+                            </p>
+                        </div>
+
+                        <div class="practice-card">
+                            <div class="practice-icon">📚</div>
+                            <h3 class="practice-title">Base de Connaissances</h3>
+                            <p class="practice-description">
+                                Consultez notre documentation complète et nos tutoriels vidéo
+                                dans la section Aide.
+                            </p>
+                        </div>
+                    </div>
+
+                    <h3 class="section-subtitle">Problèmes Techniques</h3>
+                    <p>Pour les problèmes techniques (paiements, bugs, erreurs):</p>
+                    <ul>
+                        <li>Décrivez précisément le problème</li>
+                        <li>Indiquez l'appareil utilisé (ordinateur, téléphone)</li>
+                        <li>Joignez une capture d'écran si possible</li>
+                        <li>Envoyez à: <strong>support@akelidiet.com</strong></li>
+                    </ul>
+
+                    <h3 class="section-subtitle">Suggestions & Feedback</h3>
+                    <p>
+                        Vos idées nous intéressent! Pour suggérer des améliorations ou partager
+                        votre expérience: <strong>feedback@akelidiet.com</strong>
+                    </p>
+                </div>
+            </section>
+
+            <!-- CTA Final -->
+            <div class="cta-box">
+                <h3>Prêt à Commencer?</h3>
+                <p>Créez votre première recette et commencez à gagner de l'argent dès aujourd'hui!</p>
+                <button class="cta-button">Créer ma Première Recette →</button>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Smooth scroll for TOC
+        document.querySelectorAll('.toc-item').forEach(item => {
+            item.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+                    // Update active state
+                    document.querySelectorAll('.toc-item').forEach(i => i.classList.remove('active'));
+                    this.classList.add('active');
+                }
+            });
+        });
+
+        // Update active TOC item on scroll
+        window.addEventListener('scroll', () => {
+            const sections = document.querySelectorAll('.section');
+            let current = '';
+
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (window.pageYOffset >= sectionTop - 100) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            document.querySelectorAll('.toc-item').forEach(item => {
+                item.classList.remove('active');
+                if (item.getAttribute('href') === '#' + current) {
+                    item.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

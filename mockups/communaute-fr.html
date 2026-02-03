@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Communauté - Akeli Diet Créateurs</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: #f1f4f8;
+            color: #1d2428;
+        }
+
+        .container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 280px;
+            background: white;
+            box-shadow: 2px 0 8px rgba(0, 0, 0, 0.05);
+            padding: 24px 0;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+        }
+
+        .sidebar-header {
+            padding: 0 24px 24px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 20px;
+            font-weight: 700;
+            color: #9c88ff;
+        }
+
+        .logo svg {
+            width: 32px;
+            height: 32px;
+        }
+
+        .nav-menu {
+            padding: 24px 0;
+        }
+
+        .nav-item {
+            padding: 12px 24px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #6b7280;
+            font-weight: 500;
+            text-decoration: none;
+        }
+
+        .nav-item:hover {
+            background-color: #f9fafb;
+            color: #9c88ff;
+        }
+
+        .nav-item.active {
+            background-color: #f5f3ff;
+            color: #9c88ff;
+            border-left: 3px solid #9c88ff;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-left: 280px;
+            flex: 1;
+            padding: 32px;
+            max-width: 1400px;
+        }
+
+        /* Page Header */
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 32px;
+        }
+
+        .page-header h1 {
+            font-size: 32px;
+            font-weight: 700;
+            color: #1d2428;
+        }
+
+        .btn-primary {
+            padding: 12px 24px;
+            background: #9c88ff;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary:hover {
+            background: #8b73ff;
+        }
+
+        /* Tabs */
+        .tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 24px;
+            border-bottom: 2px solid #e5e7eb;
+        }
+
+        .tab {
+            padding: 12px 24px;
+            background: transparent;
+            border: none;
+            border-bottom: 3px solid transparent;
+            font-size: 15px;
+            font-weight: 500;
+            color: #6b7280;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-bottom: -2px;
+        }
+
+        .tab:hover {
+            color: #9c88ff;
+        }
+
+        .tab.active {
+            color: #9c88ff;
+            border-bottom-color: #9c88ff;
+        }
+
+        /* Groups Grid */
+        .groups-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 24px;
+            margin-bottom: 40px;
+        }
+
+        .group-card {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+            transition: transform 0.2s, box-shadow 0.2s;
+            cursor: pointer;
+        }
+
+        .group-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+        }
+
+        .group-header {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+
+        .group-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #9c88ff 0%, #3bb78f 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            flex-shrink: 0;
+        }
+
+        .group-info {
+            flex: 1;
+        }
+
+        .group-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1d2428;
+            margin-bottom: 4px;
+        }
+
+        .group-meta {
+            font-size: 14px;
+            color: #6b7280;
+        }
+
+        .group-description {
+            font-size: 14px;
+            color: #6b7280;
+            line-height: 1.5;
+            margin-bottom: 16px;
+        }
+
+        .group-stats {
+            display: flex;
+            gap: 20px;
+            padding-top: 12px;
+            border-top: 1px solid #f3f4f6;
+            font-size: 14px;
+            color: #6b7280;
+        }
+
+        .group-stat {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .group-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            background: #f5f3ff;
+            color: #9c88ff;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 500;
+            margin-left: 8px;
+        }
+
+        /* Discussion View */
+        .discussion-view {
+            display: grid;
+            grid-template-columns: 1fr 320px;
+            gap: 24px;
+        }
+
+        .discussion-main {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+
+        .discussion-header {
+            margin-bottom: 24px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .discussion-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #1d2428;
+            margin-bottom: 12px;
+        }
+
+        .discussion-meta {
+            display: flex;
+            gap: 16px;
+            font-size: 14px;
+            color: #6b7280;
+        }
+
+        /* Posts */
+        .post {
+            padding: 20px;
+            background: #f9fafb;
+            border-radius: 8px;
+            margin-bottom: 16px;
+        }
+
+        .post-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 12px;
+        }
+
+        .post-author {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .post-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #9c88ff, #3bb78f);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 16px;
+        }
+
+        .post-author-info h4 {
+            font-size: 14px;
+            font-weight: 600;
+            color: #1d2428;
+            margin-bottom: 2px;
+        }
+
+        .post-time {
+            font-size: 12px;
+            color: #6b7280;
+        }
+
+        .post-content {
+            font-size: 14px;
+            color: #1d2428;
+            line-height: 1.6;
+            margin-bottom: 12px;
+        }
+
+        .post-actions {
+            display: flex;
+            gap: 16px;
+            padding-top: 12px;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .post-action {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 13px;
+            color: #6b7280;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .post-action:hover {
+            color: #9c88ff;
+        }
+
+        /* New Post */
+        .new-post-box {
+            background: white;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 24px;
+        }
+
+        .new-post-textarea {
+            width: 100%;
+            min-height: 100px;
+            border: none;
+            outline: none;
+            resize: vertical;
+            font-family: inherit;
+            font-size: 14px;
+            margin-bottom: 12px;
+        }
+
+        .new-post-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+        }
+
+        .btn-secondary {
+            padding: 8px 16px;
+            background: #f3f4f6;
+            color: #1d2428;
+            border: none;
+            border-radius: 6px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .btn-secondary:hover {
+            background: #e5e7eb;
+        }
+
+        .btn-small {
+            padding: 8px 16px;
+            background: #9c88ff;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .btn-small:hover {
+            background: #8b73ff;
+        }
+
+        /* Sidebar Info */
+        .sidebar-info {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+            margin-bottom: 16px;
+        }
+
+        .sidebar-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #1d2428;
+            margin-bottom: 16px;
+        }
+
+        .member-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .member-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .member-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #9c88ff, #3bb78f);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 12px;
+        }
+
+        .member-name {
+            font-size: 14px;
+            font-weight: 500;
+            color: #1d2428;
+        }
+
+        .member-role {
+            font-size: 12px;
+            color: #6b7280;
+            margin-left: auto;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .discussion-view {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 80px;
+            }
+
+            .logo span {
+                display: none;
+            }
+
+            .nav-item span:last-child {
+                display: none;
+            }
+
+            .main-content {
+                margin-left: 80px;
+                padding: 16px;
+            }
+
+            .groups-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .page-header {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <svg width="32" height="32" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="50" cy="50" r="50" fill="#3bb78f"/>
+                        <path d="M 30 65 Q 35 35, 45 50 Q 50 58, 50 85 M 50 85 Q 50 58, 55 50 Q 65 35, 70 65" fill="#FF9F1C" stroke="none"/>
+                    </svg>
+                    <span>Akeli Diet</span>
+                </div>
+            </div>
+            <nav class="nav-menu">
+                <a href="#" class="nav-item">
+                    <span>📊</span>
+                    <span>Tableau de Bord</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <span>📚</span>
+                    <span>Mes Recettes</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <span>💰</span>
+                    <span>Revenus</span>
+                </a>
+                <a href="#" class="nav-item active">
+                    <span>👥</span>
+                    <span>Communauté</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <span>👤</span>
+                    <span>Profil</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <span>⚙️</span>
+                    <span>Paramètres</span>
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Page Header -->
+            <div class="page-header">
+                <div>
+                    <h1>Communauté</h1>
+                    <p style="color: #6b7280; margin-top: 4px;">Échangez avec d'autres créateurs et partagez vos connaissances</p>
+                </div>
+                <button class="btn-primary">
+                    <span>+</span>
+                    <span>Créer un Groupe</span>
+                </button>
+            </div>
+
+            <!-- Tabs -->
+            <div class="tabs">
+                <button class="tab active">Découvrir</button>
+                <button class="tab">Mes Groupes (3)</button>
+            </div>
+
+            <!-- Groups Grid -->
+            <div class="groups-grid">
+                <!-- Group 1 -->
+                <div class="group-card">
+                    <div class="group-header">
+                        <div class="group-icon" style="background: linear-gradient(135deg, #9c88ff, #3bb78f);">🌍</div>
+                        <div class="group-info">
+                            <h3 class="group-title">
+                                Créateurs Afrique de l'Ouest
+                                <span class="group-badge">Membre</span>
+                            </h3>
+                            <div class="group-meta">Public · Région</div>
+                        </div>
+                    </div>
+                    <p class="group-description">
+                        Partagez vos recettes sénégalaises, maliennes, ivoiriennes et ouest-africaines. Conseils, astuces et discussions sur nos cuisines traditionnelles.
+                    </p>
+                    <div class="group-stats">
+                        <div class="group-stat">
+                            <span>👥</span>
+                            <span>127 membres</span>
+                        </div>
+                        <div class="group-stat">
+                            <span>💬</span>
+                            <span>34 posts ce mois</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Group 2 -->
+                <div class="group-card">
+                    <div class="group-header">
+                        <div class="group-icon" style="background: linear-gradient(135deg, #FF9F1C, #9c88ff);">📸</div>
+                        <div class="group-info">
+                            <h3 class="group-title">
+                                Photo & Présentation
+                                <span class="group-badge">Membre</span>
+                            </h3>
+                            <div class="group-meta">Public · Conseils</div>
+                        </div>
+                    </div>
+                    <p class="group-description">
+                        Apprenez à prendre de belles photos de vos plats et à présenter vos recettes de manière attrayante pour augmenter vos consommateurs.
+                    </p>
+                    <div class="group-stats">
+                        <div class="group-stat">
+                            <span>👥</span>
+                            <span>89 membres</span>
+                        </div>
+                        <div class="group-stat">
+                            <span>💬</span>
+                            <span>56 posts ce mois</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Group 3 -->
+                <div class="group-card">
+                    <div class="group-header">
+                        <div class="group-icon" style="background: linear-gradient(135deg, #3bb78f, #FF9F1C);">🌱</div>
+                        <div class="group-info">
+                            <h3 class="group-title">
+                                Recettes Végétariennes
+                                <span class="group-badge">Membre</span>
+                            </h3>
+                            <div class="group-meta">Public · Cuisine</div>
+                        </div>
+                    </div>
+                    <p class="group-description">
+                        Adaptations végétariennes de recettes traditionnelles africaines. Partagez vos astuces pour des plats sans viande mais pleins de saveurs.
+                    </p>
+                    <div class="group-stats">
+                        <div class="group-stat">
+                            <span>👥</span>
+                            <span>64 membres</span>
+                        </div>
+                        <div class="group-stat">
+                            <span>💬</span>
+                            <span>23 posts ce mois</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Group 4 -->
+                <div class="group-card">
+                    <div class="group-header">
+                        <div class="group-icon" style="background: linear-gradient(135deg, #9c88ff, #FF9F1C);">💡</div>
+                        <div class="group-info">
+                            <h3 class="group-title">Nouveaux Créateurs</h3>
+                            <div class="group-meta">Public · Support</div>
+                        </div>
+                    </div>
+                    <p class="group-description">
+                        Vous débutez sur Akeli Diet? Rejoignez ce groupe pour poser vos questions et obtenir des conseils de créateurs expérimentés.
+                    </p>
+                    <div class="group-stats">
+                        <div class="group-stat">
+                            <span>👥</span>
+                            <span>156 membres</span>
+                        </div>
+                        <div class="group-stat">
+                            <span>💬</span>
+                            <span>78 posts ce mois</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Group 5 -->
+                <div class="group-card">
+                    <div class="group-header">
+                        <div class="group-icon" style="background: linear-gradient(135deg, #FF9F1C, #3bb78f);">🏝️</div>
+                        <div class="group-info">
+                            <h3 class="group-title">Cuisine Caribéenne</h3>
+                            <div class="group-meta">Public · Région</div>
+                        </div>
+                    </div>
+                    <p class="group-description">
+                        Recettes antillaises, haïtiennes et caribéennes. Partagez la richesse de notre gastronomie créole et des îles.
+                    </p>
+                    <div class="group-stats">
+                        <div class="group-stat">
+                            <span>👥</span>
+                            <span>92 membres</span>
+                        </div>
+                        <div class="group-stat">
+                            <span>💬</span>
+                            <span>41 posts ce mois</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Group 6 -->
+                <div class="group-card">
+                    <div class="group-header">
+                        <div class="group-icon" style="background: linear-gradient(135deg, #3bb78f, #9c88ff);">📈</div>
+                        <div class="group-info">
+                            <h3 class="group-title">Optimisation Revenus</h3>
+                            <div class="group-meta">Public · Conseils</div>
+                        </div>
+                    </div>
+                    <p class="group-description">
+                        Stratégies pour augmenter vos consommateurs quotidiens. Partagez vos résultats, testez des approches et apprenez des meilleurs.
+                    </p>
+                    <div class="group-stats">
+                        <div class="group-stat">
+                            <span>👥</span>
+                            <span>143 membres</span>
+                        </div>
+                        <div class="group-stat">
+                            <span>💬</span>
+                            <span>67 posts ce mois</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Example: Discussion View (would replace groups when clicking) -->
+            <!--
+            <div class="discussion-view">
+                <div class="discussion-main">
+                    <div class="discussion-header">
+                        <h2 class="discussion-title">Créateurs Afrique de l'Ouest</h2>
+                        <div class="discussion-meta">
+                            <span>👥 127 membres</span>
+                            <span>·</span>
+                            <span>Public</span>
+                            <span>·</span>
+                            <span>Région</span>
+                        </div>
+                    </div>
+
+                    <div class="new-post-box">
+                        <textarea class="new-post-textarea" placeholder="Partagez quelque chose avec le groupe..."></textarea>
+                        <div class="new-post-actions">
+                            <button class="btn-secondary">Annuler</button>
+                            <button class="btn-small">Publier</button>
+                        </div>
+                    </div>
+
+                    <div class="post">
+                        <div class="post-header">
+                            <div class="post-author">
+                                <div class="post-avatar">K</div>
+                                <div class="post-author-info">
+                                    <h4>Kwame</h4>
+                                    <div class="post-time">Il y a 2 heures</div>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="post-content">
+                            Bonjour à tous! J'ai remarqué que mes recettes de dîner performent beaucoup mieux que mes petits-déjeuners. Est-ce que vous avez le même constat? Des conseils pour améliorer la visibilité des recettes du matin?
+                        </p>
+                        <div class="post-actions">
+                            <div class="post-action">
+                                <span>👍</span>
+                                <span>12 J'aime</span>
+                            </div>
+                            <div class="post-action">
+                                <span>💬</span>
+                                <span>5 Réponses</span>
+                            </div>
+                            <div class="post-action">
+                                <span>🔗</span>
+                                <span>Partager</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="post">
+                        <div class="post-header">
+                            <div class="post-author">
+                                <div class="post-avatar" style="background: linear-gradient(135deg, #FF9F1C, #3bb78f);">F</div>
+                                <div class="post-author-info">
+                                    <h4>Fatou</h4>
+                                    <div class="post-time">Il y a 5 heures</div>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="post-content">
+                            Super nouvelle! Ma recette de Thiéboudienne vient de passer les 500 consommateurs! 🎉 Merci pour tous vos conseils sur la présentation des plats!
+                        </p>
+                        <div class="post-actions">
+                            <div class="post-action">
+                                <span>👍</span>
+                                <span>28 J'aime</span>
+                            </div>
+                            <div class="post-action">
+                                <span>💬</span>
+                                <span>8 Réponses</span>
+                            </div>
+                            <div class="post-action">
+                                <span>🔗</span>
+                                <span>Partager</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="sidebar-info">
+                        <h3 class="sidebar-title">À propos</h3>
+                        <p style="font-size: 14px; color: #6b7280; line-height: 1.6;">
+                            Groupe dédié aux créateurs de recettes d'Afrique de l'Ouest. Partagez vos recettes, conseils et expériences.
+                        </p>
+                    </div>
+
+                    <div class="sidebar-info">
+                        <h3 class="sidebar-title">Membres Actifs</h3>
+                        <div class="member-list">
+                            <div class="member-item">
+                                <div class="member-avatar">A</div>
+                                <span class="member-name">Amina</span>
+                                <span class="member-role">Admin</span>
+                            </div>
+                            <div class="member-item">
+                                <div class="member-avatar" style="background: linear-gradient(135deg, #FF9F1C, #9c88ff);">K</div>
+                                <span class="member-name">Kwame</span>
+                                <span class="member-role">Membre</span>
+                            </div>
+                            <div class="member-item">
+                                <div class="member-avatar" style="background: linear-gradient(135deg, #3bb78f, #FF9F1C);">F</div>
+                                <span class="member-name">Fatou</span>
+                                <span class="member-role">Membre</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            -->
+
+        </main>
+    </div>
+</body>
+</html>

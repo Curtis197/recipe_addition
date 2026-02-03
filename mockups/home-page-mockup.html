@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recipe Addition - Home Page Mockup</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: #f1f4f8;
+            color: #1d2428;
+        }
+
+        .container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar Navigation */
+        .sidebar {
+            width: 280px;
+            background: white;
+            box-shadow: 2px 0 8px rgba(0, 0, 0, 0.05);
+            padding: 24px 0;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+        }
+
+        .sidebar-header {
+            padding: 0 24px 24px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: #4f46e5;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-menu {
+            padding: 24px 0;
+        }
+
+        .nav-item {
+            padding: 12px 24px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #6b7280;
+            font-weight: 500;
+        }
+
+        .nav-item:hover {
+            background-color: #f9fafb;
+            color: #4f46e5;
+        }
+
+        .nav-item.active {
+            background-color: #eef2ff;
+            color: #4f46e5;
+            border-left: 3px solid #4f46e5;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-left: 280px;
+            flex: 1;
+            padding: 32px;
+        }
+
+        .header {
+            background: white;
+            padding: 24px 32px;
+            border-radius: 12px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+            margin-bottom: 32px;
+        }
+
+        .header h1 {
+            font-size: 32px;
+            font-weight: 700;
+            color: #1d2428;
+            margin-bottom: 8px;
+        }
+
+        .header p {
+            color: #6b7280;
+            font-size: 16px;
+        }
+
+        /* Recipe Cards Section */
+        .section-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: #1d2428;
+        }
+
+        .recipe-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 24px;
+            margin-bottom: 40px;
+        }
+
+        .recipe-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s, box-shadow 0.2s;
+            cursor: pointer;
+        }
+
+        .recipe-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+        }
+
+        .recipe-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .recipe-content {
+            padding: 20px;
+        }
+
+        .recipe-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #1d2428;
+        }
+
+        .recipe-meta {
+            display: flex;
+            gap: 16px;
+            color: #6b7280;
+            font-size: 14px;
+            margin-bottom: 12px;
+        }
+
+        .recipe-meta span {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .recipe-description {
+            color: #6b7280;
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 16px;
+        }
+
+        .recipe-tags {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            background: #eef2ff;
+            color: #4f46e5;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        /* Selected Recipe Detail */
+        .recipe-detail {
+            background: white;
+            padding: 32px;
+            border-radius: 12px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+            margin-bottom: 32px;
+        }
+
+        .detail-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 24px;
+        }
+
+        .detail-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: #1d2428;
+        }
+
+        .btn-primary {
+            background: #4f46e5;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .btn-primary:hover {
+            background: #4338ca;
+        }
+
+        .ingredients-section {
+            margin-bottom: 24px;
+        }
+
+        .ingredients-section h3 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: #1d2428;
+        }
+
+        .ingredient-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 16px;
+            background: #f9fafb;
+            border-radius: 8px;
+            margin-bottom: 8px;
+        }
+
+        .ingredient-name {
+            font-weight: 500;
+        }
+
+        .ingredient-amount {
+            color: #6b7280;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 80px;
+            }
+
+            .sidebar-header .logo {
+                font-size: 18px;
+            }
+
+            .nav-item span {
+                display: none;
+            }
+
+            .main-content {
+                margin-left: 80px;
+                padding: 16px;
+            }
+
+            .recipe-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    🍳 Recipe Addition
+                </div>
+            </div>
+            <nav class="nav-menu">
+                <div class="nav-item active">
+                    <span>📚</span>
+                    <span>Browse Recipes</span>
+                </div>
+                <div class="nav-item">
+                    <span>➕</span>
+                    <span>Add Recipe</span>
+                </div>
+                <div class="nav-item">
+                    <span>💰</span>
+                    <span>Revenue</span>
+                </div>
+                <div class="nav-item">
+                    <span>⭐</span>
+                    <span>Favorites</span>
+                </div>
+                <div class="nav-item">
+                    <span>👤</span>
+                    <span>Profile</span>
+                </div>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <div class="header">
+                <h1>Welcome to Recipe Addition</h1>
+                <p>Discover and share amazing recipes from around the world</p>
+            </div>
+
+            <!-- Temporary Recipes Section -->
+            <h2 class="section-title">Pending Recipes (Ready to Publish)</h2>
+            <div class="recipe-grid">
+                <div class="recipe-card">
+                    <div class="recipe-image" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);"></div>
+                    <div class="recipe-content">
+                        <h3 class="recipe-title">Classic Spaghetti Carbonara</h3>
+                        <div class="recipe-meta">
+                            <span>⏱️ 25 min</span>
+                            <span>🍽️ Italian</span>
+                        </div>
+                        <p class="recipe-description">A traditional Italian pasta dish with eggs, cheese, and pancetta</p>
+                        <div class="recipe-tags">
+                            <span class="tag">Pasta</span>
+                            <span class="tag">Italian</span>
+                            <span class="tag">Quick</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="recipe-card">
+                    <div class="recipe-image" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);"></div>
+                    <div class="recipe-content">
+                        <h3 class="recipe-title">Thai Green Curry</h3>
+                        <div class="recipe-meta">
+                            <span>⏱️ 40 min</span>
+                            <span>🍽️ Thai</span>
+                        </div>
+                        <p class="recipe-description">Aromatic curry with coconut milk, vegetables, and spices</p>
+                        <div class="recipe-tags">
+                            <span class="tag">Thai</span>
+                            <span class="tag">Spicy</span>
+                            <span class="tag">Vegetarian</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="recipe-card">
+                    <div class="recipe-image" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);"></div>
+                    <div class="recipe-content">
+                        <h3 class="recipe-title">Chocolate Lava Cake</h3>
+                        <div class="recipe-meta">
+                            <span>⏱️ 30 min</span>
+                            <span>🍽️ French</span>
+                        </div>
+                        <p class="recipe-description">Decadent dessert with molten chocolate center</p>
+                        <div class="recipe-tags">
+                            <span class="tag">Dessert</span>
+                            <span class="tag">Chocolate</span>
+                            <span class="tag">French</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="recipe-card">
+                    <div class="recipe-image" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);"></div>
+                    <div class="recipe-content">
+                        <h3 class="recipe-title">Mexican Tacos al Pastor</h3>
+                        <div class="recipe-meta">
+                            <span>⏱️ 1h 15min</span>
+                            <span>🍽️ Mexican</span>
+                        </div>
+                        <p class="recipe-description">Marinated pork tacos with pineapple and fresh cilantro</p>
+                        <div class="recipe-tags">
+                            <span class="tag">Mexican</span>
+                            <span class="tag">Street Food</span>
+                            <span class="tag">Pork</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Selected Recipe Detail -->
+            <div class="recipe-detail">
+                <div class="detail-header">
+                    <h2 class="detail-title">Classic Spaghetti Carbonara</h2>
+                    <button class="btn-primary">Publish Recipe</button>
+                </div>
+
+                <div class="recipe-meta" style="margin-bottom: 24px;">
+                    <span>⏱️ 25 minutes</span>
+                    <span>🍽️ Italian</span>
+                    <span>👨‍🍳 Intermediate</span>
+                </div>
+
+                <div class="ingredients-section">
+                    <h3>Ingredients</h3>
+                    <div class="ingredient-item">
+                        <span class="ingredient-name">Spaghetti</span>
+                        <span class="ingredient-amount">400g</span>
+                    </div>
+                    <div class="ingredient-item">
+                        <span class="ingredient-name">Pancetta or Guanciale</span>
+                        <span class="ingredient-amount">200g</span>
+                    </div>
+                    <div class="ingredient-item">
+                        <span class="ingredient-name">Eggs</span>
+                        <span class="ingredient-amount">4 large</span>
+                    </div>
+                    <div class="ingredient-item">
+                        <span class="ingredient-name">Parmesan Cheese</span>
+                        <span class="ingredient-amount">100g, grated</span>
+                    </div>
+                    <div class="ingredient-item">
+                        <span class="ingredient-name">Black Pepper</span>
+                        <span class="ingredient-amount">To taste</span>
+                    </div>
+                    <div class="ingredient-item">
+                        <span class="ingredient-name">Salt</span>
+                        <span class="ingredient-amount">For pasta water</span>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+</html>
