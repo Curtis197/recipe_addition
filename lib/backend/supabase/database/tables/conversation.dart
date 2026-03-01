@@ -22,4 +22,11 @@ class ConversationRow extends SupabaseDataRow {
 
   String? get resume => getField<String>('resume');
   set resume(String? value) => setField<String>('resume', value);
+
+  bool? get convesationCreated => getField<bool>('convesation-created');
+  set convesationCreated(bool? value) =>
+      setField<bool>('convesation-created', value);
+
+  DateTime? get createdAt => getField<DateTime>('created_at');
+  set createdAt(DateTime? value) => setField<DateTime>('created_at', value);
 }

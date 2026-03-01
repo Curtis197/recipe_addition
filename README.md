@@ -1,4 +1,4 @@
-# recipe addition
+# akeli creator
 
 A new Flutter project.
 

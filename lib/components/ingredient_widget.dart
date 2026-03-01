@@ -1,7 +1,7 @@
 import '/backend/supabase/supabase.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import '/receipe/insert_ingredient/insert_ingredient_widget.dart';
+import '/receipe/update_ingredient/update_ingredient_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'ingredient_model.dart';
@@ -69,9 +69,9 @@ class _IngredientWidgetState extends State<IngredientWidget> {
                       children: [
                         Expanded(
                           child: wrapWithModel(
-                            model: _model.insertIngredientModel,
+                            model: _model.updateIngredientModel,
                             updateCallback: () => safeSetState(() {}),
-                            child: InsertIngredientWidget(),
+                            child: UpdateIngredientWidget(),
                           ),
                         ),
                       ].divide(SizedBox(width: 10.0)),

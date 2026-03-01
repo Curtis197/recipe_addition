@@ -78,117 +78,102 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
       debugLogDiagnostics: true,
       refreshListenable: appStateNotifier,
       navigatorKey: appNavigatorKey,
-      errorBuilder: (context, state) => appStateNotifier.loggedIn
-          ? AccueilWidget()
-          : AuthentificationWidget(),
+      errorBuilder: (context, state) =>
+          appStateNotifier.loggedIn ? HomeWidget() : AuthentificationWidget(),
       routes: [
         FFRoute(
           name: '_initialize',
           path: '/',
           builder: (context, _) => appStateNotifier.loggedIn
-              ? AccueilWidget()
+              ? HomeWidget()
               : AuthentificationWidget(),
-        ),
-        FFRoute(
-          name: ReceipeWidget.routeName,
-          path: ReceipeWidget.routePath,
-          builder: (context, params) => ReceipeWidget(),
-        ),
-        FFRoute(
-          name: AccueilWidget.routeName,
-          path: AccueilWidget.routePath,
-          builder: (context, params) => AccueilWidget(),
         ),
         FFRoute(
           name: AuthentificationWidget.routeName,
           path: AuthentificationWidget.routePath,
-          builder: (context, params) => AuthentificationWidget(),
+          builder: (context, params) => AuthentificationWidget(
+            logIn: params.getParam(
+              'logIn',
+              ParamType.bool,
+            ),
+          ),
         ),
         FFRoute(
-          name: EditTemporaryReceipeWidget.routeName,
-          path: EditTemporaryReceipeWidget.routePath,
-          builder: (context, params) => EditTemporaryReceipeWidget(
-            receipeId: params.getParam(
-              'receipeId',
+          name: LandingPageWidget.routeName,
+          path: LandingPageWidget.routePath,
+          builder: (context, params) => LandingPageWidget(),
+        ),
+        FFRoute(
+          name: HomeWidget.routeName,
+          path: HomeWidget.routePath,
+          builder: (context, params) => HomeWidget(),
+        ),
+        FFRoute(
+          name: DashboardRevenueWidget.routeName,
+          path: DashboardRevenueWidget.routePath,
+          builder: (context, params) => DashboardRevenueWidget(),
+        ),
+        FFRoute(
+          name: RecipesWidget.routeName,
+          path: RecipesWidget.routePath,
+          builder: (context, params) => RecipesWidget(),
+        ),
+        FFRoute(
+          name: RecipesDetailWidget.routeName,
+          path: RecipesDetailWidget.routePath,
+          builder: (context, params) => RecipesDetailWidget(
+            recipe: params.getParam(
+              'recipe',
               ParamType.int,
             ),
           ),
         ),
         FFRoute(
-          name: ReceipeDetailWidget.routeName,
-          path: ReceipeDetailWidget.routePath,
-          builder: (context, params) => ReceipeDetailWidget(
-            receipeId: params.getParam(
-              'receipeId',
-              ParamType.int,
-            ),
-          ),
+          name: ParrainageUtilisateurWidget.routeName,
+          path: ParrainageUtilisateurWidget.routePath,
+          builder: (context, params) => ParrainageUtilisateurWidget(),
         ),
         FFRoute(
-          name: RevenueWidget.routeName,
-          path: RevenueWidget.routePath,
-          builder: (context, params) => RevenueWidget(),
-        ),
-        FFRoute(
-          name: Profile13ResponsiveWidget.routeName,
-          path: Profile13ResponsiveWidget.routePath,
-          builder: (context, params) => Profile13ResponsiveWidget(),
-        ),
-        FFRoute(
-          name: TemporaryReceipeDetailWidget.routeName,
-          path: TemporaryReceipeDetailWidget.routePath,
-          builder: (context, params) => TemporaryReceipeDetailWidget(
-            receipeId: params.getParam(
-              'receipeId',
-              ParamType.int,
-            ),
-          ),
-        ),
-        FFRoute(
-          name: EditReceipeWidget.routeName,
-          path: EditReceipeWidget.routePath,
-          builder: (context, params) => EditReceipeWidget(
-            receipeId: params.getParam(
-              'receipeId',
-              ParamType.int,
-            ),
-          ),
-        ),
-        FFRoute(
-          name: CreateReceipeWidget.routeName,
-          path: CreateReceipeWidget.routePath,
-          builder: (context, params) => CreateReceipeWidget(
-            receipeId: params.getParam(
-              'receipeId',
-              ParamType.int,
-            ),
-          ),
-        ),
-        FFRoute(
-          name: TestAccueilWidget.routeName,
-          path: TestAccueilWidget.routePath,
-          builder: (context, params) => TestAccueilWidget(),
-        ),
-        FFRoute(
-          name: TemporaryReceipeDetailCopyWidget.routeName,
-          path: TemporaryReceipeDetailCopyWidget.routePath,
-          builder: (context, params) => TemporaryReceipeDetailCopyWidget(
-            receipeId: params.getParam(
-              'receipeId',
-              ParamType.int,
-            ),
-          ),
-        ),
-        FFRoute(
-          name: ReceipeDetailWebWidget.routeName,
-          path: ReceipeDetailWebWidget.routePath,
-          builder: (context, params) => ReceipeDetailWebWidget(
-            receipe: params.getParam<ReceipeRow>(
-              'receipe',
+          name: CreateRecipeWidget.routeName,
+          path: CreateRecipeWidget.routePath,
+          builder: (context, params) => CreateRecipeWidget(
+            recipeID: params.getParam<TemporaryReceipeRow>(
+              'recipeID',
               ParamType.SupabaseRow,
             ),
-            receipeId: params.getParam(
-              'receipeId',
+          ),
+        ),
+        FFRoute(
+          name: SettingsWidget.routeName,
+          path: SettingsWidget.routePath,
+          builder: (context, params) => SettingsWidget(),
+        ),
+        FFRoute(
+          name: EditRecipeWidget.routeName,
+          path: EditRecipeWidget.routePath,
+          builder: (context, params) => EditRecipeWidget(
+            recipe: params.getParam<ReceipeRow>(
+              'recipe',
+              ParamType.SupabaseRow,
+            ),
+          ),
+        ),
+        FFRoute(
+          name: EditDraftRecipeWidget.routeName,
+          path: EditDraftRecipeWidget.routePath,
+          builder: (context, params) => EditDraftRecipeWidget(
+            recipeID: params.getParam<TemporaryReceipeRow>(
+              'recipeID',
+              ParamType.SupabaseRow,
+            ),
+          ),
+        ),
+        FFRoute(
+          name: RecipesDetailCopyWidget.routeName,
+          path: RecipesDetailCopyWidget.routePath,
+          builder: (context, params) => RecipesDetailCopyWidget(
+            recipe: params.getParam(
+              'recipe',
               ParamType.int,
             ),
           ),
@@ -395,6 +380,7 @@ class FFRoute {
           return transitionInfo.hasTransition
               ? CustomTransitionPage(
                   key: state.pageKey,
+                  name: state.name,
                   child: child,
                   transitionDuration: transitionInfo.duration,
                   transitionsBuilder:
@@ -412,7 +398,8 @@ class FFRoute {
                     child,
                   ),
                 )
-              : MaterialPage(key: state.pageKey, child: child);
+              : MaterialPage(
+                  key: state.pageKey, name: state.name, child: child);
         },
         routes: routes,
       );

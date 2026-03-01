@@ -5,26 +5,42 @@ import 'package:flutter/material.dart';
 class InsertStepModel extends FlutterFlowModel<InsertStepWidget> {
   ///  State fields for stateful widgets in this component.
 
-  // State field(s) for number widget.
-  FocusNode? numberFocusNode;
-  TextEditingController? numberTextController;
-  String? Function(BuildContext, String?)? numberTextControllerValidator;
-  // State field(s) for text widget.
-  FocusNode? textFocusNode;
-  TextEditingController? textTextController;
-  String? Function(BuildContext, String?)? textTextControllerValidator;
-  // State field(s) for Checkbox widget.
-  bool? checkboxValue;
+  // State field(s) for numberPC widget.
+  FocusNode? numberPCFocusNode;
+  TextEditingController? numberPCTextController;
+  String? Function(BuildContext, String?)? numberPCTextControllerValidator;
+  // State field(s) for textPC widget.
+  FocusNode? textPCFocusNode;
+  TextEditingController? textPCTextController;
+  String? Function(BuildContext, String?)? textPCTextControllerValidator;
+  // State field(s) for CheckboxPC widget.
+  bool? checkboxPCValue;
+  // State field(s) for numberPhone widget.
+  FocusNode? numberPhoneFocusNode;
+  TextEditingController? numberPhoneTextController;
+  String? Function(BuildContext, String?)? numberPhoneTextControllerValidator;
+  // State field(s) for CheckboxPhone widget.
+  bool? checkboxPhoneValue;
+  // State field(s) for textPhone widget.
+  FocusNode? textPhoneFocusNode;
+  TextEditingController? textPhoneTextController;
+  String? Function(BuildContext, String?)? textPhoneTextControllerValidator;
 
   @override
   void initState(BuildContext context) {}
 
   @override
   void dispose() {
-    numberFocusNode?.dispose();
-    numberTextController?.dispose();
+    numberPCFocusNode?.dispose();
+    numberPCTextController?.dispose();
 
-    textFocusNode?.dispose();
-    textTextController?.dispose();
+    textPCFocusNode?.dispose();
+    textPCTextController?.dispose();
+
+    numberPhoneFocusNode?.dispose();
+    numberPhoneTextController?.dispose();
+
+    textPhoneFocusNode?.dispose();
+    textPhoneTextController?.dispose();
   }
 }

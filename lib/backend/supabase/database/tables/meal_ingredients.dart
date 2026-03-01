@@ -33,8 +33,8 @@ class MealIngredientsRow extends SupabaseDataRow {
   String? get unit => getField<String>('unit');
   set unit(String? value) => setField<String>('unit', value);
 
-  int? get baseQuantity => getField<int>('base_quantity');
-  set baseQuantity(int? value) => setField<int>('base_quantity', value);
+  double? get baseQuantity => getField<double>('base_quantity');
+  set baseQuantity(double? value) => setField<double>('base_quantity', value);
 
   double? get adjustedQuantity => getField<double>('adjusted_quantity');
   set adjustedQuantity(double? value) =>
@@ -46,9 +46,9 @@ class MealIngredientsRow extends SupabaseDataRow {
   String? get photoUrl => getField<String>('photo_url');
   set photoUrl(String? value) => setField<String>('photo_url', value);
 
-  double? get item => getField<double>('item');
-  set item(double? value) => setField<double>('item', value);
-
   bool? get title => getField<bool>('title');
   set title(bool? value) => setField<bool>('title', value);
+
+  int? get index => getField<int>('index');
+  set index(int? value) => setField<int>('index', value);
 }

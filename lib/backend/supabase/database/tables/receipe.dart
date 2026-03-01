@@ -72,4 +72,34 @@ class ReceipeRow extends SupabaseDataRow {
 
   int? get mealConsumed => getField<int>('meal_consumed');
   set mealConsumed(int? value) => setField<int>('meal_consumed', value);
+
+  bool? get free => getField<bool>('free');
+  set free(bool? value) => setField<bool>('free', value);
+
+  double? get totalEarnings => getField<double>('total_earnings');
+  set totalEarnings(double? value) => setField<double>('total_earnings', value);
+
+  int? get dailyConsumerCount => getField<int>('daily_consumer_count');
+  set dailyConsumerCount(int? value) =>
+      setField<int>('daily_consumer_count', value);
+
+  DateTime? get publishedAt => getField<DateTime>('published_at');
+  set publishedAt(DateTime? value) => setField<DateTime>('published_at', value);
+
+  DateTime? get unpublishedAt => getField<DateTime>('unpublished_at');
+  set unpublishedAt(DateTime? value) =>
+      setField<DateTime>('unpublished_at', value);
+
+  bool? get isPublished => getField<bool>('is_published');
+  set isPublished(bool? value) => setField<bool>('is_published', value);
+
+  DateTime? get lastConsumedAt => getField<DateTime>('last_consumed_at');
+  set lastConsumedAt(DateTime? value) =>
+      setField<DateTime>('last_consumed_at', value);
+
+  bool? get isDeleted => getField<bool>('is_deleted');
+  set isDeleted(bool? value) => setField<bool>('is_deleted', value);
+
+  bool? get isCleaned => getField<bool>('is_cleaned');
+  set isCleaned(bool? value) => setField<bool>('is_cleaned', value);
 }

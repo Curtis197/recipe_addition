@@ -66,4 +66,7 @@ class MealRow extends SupabaseDataRow {
 
   String? get imageUrl => getField<String>('image_url');
   set imageUrl(String? value) => setField<String>('image_url', value);
+
+  bool? get generated => getField<bool>('generated');
+  set generated(bool? value) => setField<bool>('generated', value);
 }

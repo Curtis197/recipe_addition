@@ -17,8 +17,8 @@ class UserGoalRow extends SupabaseDataRow {
   String get id => getField<String>('id')!;
   set id(String value) => setField<String>('id', value);
 
-  double? get targetWeight => getField<double>('target_weight');
-  set targetWeight(double? value) => setField<double>('target_weight', value);
+  int? get targetWeight => getField<int>('target_weight');
+  set targetWeight(int? value) => setField<int>('target_weight', value);
 
   double? get targetCalorie => getField<double>('target_calorie');
   set targetCalorie(double? value) => setField<double>('target_calorie', value);
@@ -66,7 +66,4 @@ class UserGoalRow extends SupabaseDataRow {
 
   String? get objectif => getField<String>('objectif');
   set objectif(String? value) => setField<String>('objectif', value);
-
-  int? get test => getField<int>('test');
-  set test(int? value) => setField<int>('test', value);
 }

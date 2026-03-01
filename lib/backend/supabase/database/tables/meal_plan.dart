@@ -32,4 +32,11 @@ class MealPlanRow extends SupabaseDataRow {
   bool? get ingredientsGenerated => getField<bool>('ingredients_generated');
   set ingredientsGenerated(bool? value) =>
       setField<bool>('ingredients_generated', value);
+
+  bool? get shoppingListCreated => getField<bool>('shopping_list_created');
+  set shoppingListCreated(bool? value) =>
+      setField<bool>('shopping_list_created', value);
+
+  bool? get mealGenerated => getField<bool>('meal_generated');
+  set mealGenerated(bool? value) => setField<bool>('meal_generated', value);
 }

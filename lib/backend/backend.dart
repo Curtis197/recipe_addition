@@ -4,6 +4,7 @@ import 'schema/util/firestore_util.dart';
 
 import 'schema/receipe_image_record.dart';
 import 'schema/test_record.dart';
+import 'schema/chart_data_record.dart';
 
 export 'dart:async' show StreamSubscription;
 export 'package:cloud_firestore/cloud_firestore.dart' hide Order;
@@ -14,6 +15,7 @@ export 'schema/util/schema_util.dart';
 
 export 'schema/receipe_image_record.dart';
 export 'schema/test_record.dart';
+export 'schema/chart_data_record.dart';
 
 /// Functions to query ReceipeImageRecords (as a Stream and as a Future).
 Future<int> queryReceipeImageRecordCount({
@@ -84,6 +86,43 @@ Future<List<TestRecord>> queryTestRecordOnce({
     queryCollectionOnce(
       TestRecord.collection,
       TestRecord.fromSnapshot,
+      queryBuilder: queryBuilder,
+      limit: limit,
+      singleRecord: singleRecord,
+    );
+
+/// Functions to query ChartDataRecords (as a Stream and as a Future).
+Future<int> queryChartDataRecordCount({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+}) =>
+    queryCollectionCount(
+      ChartDataRecord.collection,
+      queryBuilder: queryBuilder,
+      limit: limit,
+    );
+
+Stream<List<ChartDataRecord>> queryChartDataRecord({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+  bool singleRecord = false,
+}) =>
+    queryCollection(
+      ChartDataRecord.collection,
+      ChartDataRecord.fromSnapshot,
+      queryBuilder: queryBuilder,
+      limit: limit,
+      singleRecord: singleRecord,
+    );
+
+Future<List<ChartDataRecord>> queryChartDataRecordOnce({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+  bool singleRecord = false,
+}) =>
+    queryCollectionOnce(
+      ChartDataRecord.collection,
+      ChartDataRecord.fromSnapshot,
       queryBuilder: queryBuilder,
       limit: limit,
       singleRecord: singleRecord,

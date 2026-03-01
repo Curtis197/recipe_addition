@@ -38,4 +38,39 @@ class CreatorRow extends SupabaseDataRow {
 
   String? get profilUrl => getField<String>('profil_url');
   set profilUrl(String? value) => setField<String>('profil_url', value);
+
+  bool? get stripeOnboardingComplete =>
+      getField<bool>('stripe_onboarding_complete');
+  set stripeOnboardingComplete(bool? value) =>
+      setField<bool>('stripe_onboarding_complete', value);
+
+  bool? get paymentEnabled => getField<bool>('payment_enabled');
+  set paymentEnabled(bool? value) => setField<bool>('payment_enabled', value);
+
+  double? get totalEarnings => getField<double>('total_earnings');
+  set totalEarnings(double? value) => setField<double>('total_earnings', value);
+
+  int? get totalDailyConsumers => getField<int>('total_daily_consumers');
+  set totalDailyConsumers(int? value) =>
+      setField<int>('total_daily_consumers', value);
+
+  int? get recipeCount => getField<int>('recipe_count');
+  set recipeCount(int? value) => setField<int>('recipe_count', value);
+
+  String? get bio => getField<String>('bio');
+  set bio(String? value) => setField<String>('bio', value);
+
+  String? get heritageRegion => getField<String>('heritage_region');
+  set heritageRegion(String? value) =>
+      setField<String>('heritage_region', value);
+
+  List<String> get specialties => getListField<String>('specialties');
+  set specialties(List<String>? value) =>
+      setListField<String>('specialties', value);
+
+  DateTime? get createdAt => getField<DateTime>('created_at');
+  set createdAt(DateTime? value) => setField<DateTime>('created_at', value);
+
+  DateTime? get updatedAt => getField<DateTime>('updated_at');
+  set updatedAt(DateTime? value) => setField<DateTime>('updated_at', value);
 }

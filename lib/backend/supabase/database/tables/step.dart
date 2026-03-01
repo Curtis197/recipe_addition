@@ -20,8 +20,8 @@ class StepRow extends SupabaseDataRow {
   String? get text => getField<String>('text');
   set text(String? value) => setField<String>('text', value);
 
-  double? get number => getField<double>('number');
-  set number(double? value) => setField<double>('number', value);
+  int? get number => getField<int>('number');
+  set number(int? value) => setField<int>('number', value);
 
   int? get receipeId => getField<int>('receipe_id');
   set receipeId(int? value) => setField<int>('receipe_id', value);
@@ -35,4 +35,7 @@ class StepRow extends SupabaseDataRow {
 
   bool? get title => getField<bool>('title');
   set title(bool? value) => setField<bool>('title', value);
+
+  DateTime? get createdAt => getField<DateTime>('created_at');
+  set createdAt(DateTime? value) => setField<DateTime>('created_at', value);
 }

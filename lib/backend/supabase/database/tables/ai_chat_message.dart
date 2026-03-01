@@ -33,4 +33,7 @@ class AiChatMessageRow extends SupabaseDataRow {
   String? get conversationId => getField<String>('conversation_id');
   set conversationId(String? value) =>
       setField<String>('conversation_id', value);
+
+  DateTime? get messageTime => getField<DateTime>('message_time');
+  set messageTime(DateTime? value) => setField<DateTime>('message_time', value);
 }

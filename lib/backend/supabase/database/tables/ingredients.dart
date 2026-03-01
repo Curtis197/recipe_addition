@@ -50,4 +50,7 @@ class IngredientsRow extends SupabaseDataRow {
 
   int? get roundTypeIndex => getField<int>('round_type_index');
   set roundTypeIndex(int? value) => setField<int>('round_type_index', value);
+
+  DateTime? get createdAt => getField<DateTime>('created_at');
+  set createdAt(DateTime? value) => setField<DateTime>('created_at', value);
 }

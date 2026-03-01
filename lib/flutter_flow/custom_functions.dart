@@ -39,3 +39,62 @@ List<dynamic>? newCustomFunction2(List<StepRow>? step) {
     };
   }).toList();
 }
+
+List<String>? listofDay(dynamic days) {
+  // return the keys of the json  "daily_breakdown": {         "monday": 0,         "tuesday": 0,         "wednesday": 0,         "thursday": 0,         "friday": 0,         "saturday": 0,         "sunday": 0 as a list of string
+  if (days is Map<String, dynamic>) {
+    return days.keys.toList();
+  }
+  return null;
+}
+
+List<DateTime>? listOfDate(dynamic days) {
+  // return those days in date of the ecurrent week return values from "daily_breakdown": {         "monday": 0,         "tuesday": 0,         "wednesday": 0,         "thursday": 0,         "friday": 0,         "saturday": 0,         "sunday": 0 monday = this monday datetime
+  DateTime now = DateTime.now();
+  DateTime startOfWeek =
+      now.subtract(Duration(days: now.weekday - 1)); // Monday
+  List<DateTime> weekDays = [];
+
+  for (int i = 0; i < 7; i++) {
+    weekDays.add(startOfWeek.add(Duration(days: i)));
+  }
+
+  return weekDays;
+}
+
+List<int>? listofInt(dynamic value) {
+  // return values from "daily_breakdown": {         "monday": 0,         "tuesday": 0,         "wednesday": 0,         "thursday": 0,         "friday": 0,         "saturday": 0,         "sunday": 0 as a ist of int
+  if (value is Map<String, dynamic> && value.containsKey('daily_breakdown')) {
+    final breakdown = value['daily_breakdown'];
+    if (breakdown is Map<String, int>) {
+      return [
+        breakdown['monday'] ?? 0,
+        breakdown['tuesday'] ?? 0,
+        breakdown['wednesday'] ?? 0,
+        breakdown['thursday'] ?? 0,
+        breakdown['friday'] ?? 0,
+        breakdown['saturday'] ?? 0,
+        breakdown['sunday'] ?? 0,
+      ];
+    }
+  }
+  return null;
+}
+
+List<DateTime>? listOfDate2(dynamic dailyMeealConsumed) {
+  // return a list of date from the json keys list "daily_meals_consumed": {     "2026-02-01": 0,     "2026-02-02": 0,     "2026-02-03": 0,     "2026-02-04": 0}
+  List<DateTime>? listOfDate2(dynamic dailyMealConsumed) {
+    if (dailyMealConsumed is Map<String, dynamic>) {
+      return dailyMealConsumed.keys.map((dateString) {
+        return DateTime.parse(dateString);
+      }).toList();
+    }
+    return null;
+  }
+}
+
+DateTime? newCustomFunction(String? time) {
+  // parse a timestamp to a datetime
+  if (time == null) return null; // Return null if the input is null
+  return DateTime.tryParse(time); // Attempt to parse the timestamp to DateTime
+}

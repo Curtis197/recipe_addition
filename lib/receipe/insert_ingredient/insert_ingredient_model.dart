@@ -1,4 +1,3 @@
-import '/backend/supabase/supabase.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/form_field_controller.dart';
 import 'insert_ingredient_widget.dart' show InsertIngredientWidget;
@@ -13,34 +12,48 @@ class InsertIngredientModel extends FlutterFlowModel<InsertIngredientWidget> {
 
   ///  State fields for stateful widgets in this component.
 
-  // State field(s) for quantity widget.
-  FocusNode? quantityFocusNode;
-  TextEditingController? quantityTextController;
-  String? Function(BuildContext, String?)? quantityTextControllerValidator;
-  // State field(s) for unit widget.
-  String? unitValue;
-  FormFieldController<String>? unitValueController;
-  // State field(s) for round widget.
-  String? roundValue;
-  FormFieldController<String>? roundValueController;
-  // Stores action output result for [Backend Call - Query Rows] action in round widget.
-  List<RoundTypeRow>? roundType;
-  // State field(s) for name widget.
-  FocusNode? nameFocusNode;
-  TextEditingController? nameTextController;
-  String? Function(BuildContext, String?)? nameTextControllerValidator;
-  // State field(s) for Checkbox widget.
-  bool? checkboxValue;
+  // State field(s) for quantityPC widget.
+  FocusNode? quantityPCFocusNode;
+  TextEditingController? quantityPCTextController;
+  String? Function(BuildContext, String?)? quantityPCTextControllerValidator;
+  // State field(s) for unitPC widget.
+  String? unitPCValue;
+  FormFieldController<String>? unitPCValueController;
+  // State field(s) for textPC widget.
+  FocusNode? textPCFocusNode;
+  TextEditingController? textPCTextController;
+  String? Function(BuildContext, String?)? textPCTextControllerValidator;
+  // State field(s) for CheckboxPC widget.
+  bool? checkboxPCValue;
+  // State field(s) for quantityPhone widget.
+  FocusNode? quantityPhoneFocusNode;
+  TextEditingController? quantityPhoneTextController;
+  String? Function(BuildContext, String?)? quantityPhoneTextControllerValidator;
+  // State field(s) for unitPhone widget.
+  String? unitPhoneValue;
+  FormFieldController<String>? unitPhoneValueController;
+  // State field(s) for CheckboxPhone widget.
+  bool? checkboxPhoneValue;
+  // State field(s) for TextPhone widget.
+  FocusNode? textPhoneFocusNode;
+  TextEditingController? textPhoneTextController;
+  String? Function(BuildContext, String?)? textPhoneTextControllerValidator;
 
   @override
   void initState(BuildContext context) {}
 
   @override
   void dispose() {
-    quantityFocusNode?.dispose();
-    quantityTextController?.dispose();
+    quantityPCFocusNode?.dispose();
+    quantityPCTextController?.dispose();
 
-    nameFocusNode?.dispose();
-    nameTextController?.dispose();
+    textPCFocusNode?.dispose();
+    textPCTextController?.dispose();
+
+    quantityPhoneFocusNode?.dispose();
+    quantityPhoneTextController?.dispose();
+
+    textPhoneFocusNode?.dispose();
+    textPhoneTextController?.dispose();
   }
 }

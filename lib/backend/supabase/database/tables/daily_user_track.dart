@@ -21,8 +21,8 @@ class DailyUserTrackRow extends SupabaseDataRow {
   DateTime? get date => getField<DateTime>('date');
   set date(DateTime? value) => setField<DateTime>('date', value);
 
-  double? get targetCalorie => getField<double>('target_calorie');
-  set targetCalorie(double? value) => setField<double>('target_calorie', value);
+  int? get targetCalorie => getField<int>('target_calorie');
+  set targetCalorie(int? value) => setField<int>('target_calorie', value);
 
   int? get mealPlanned => getField<int>('meal_planned');
   set mealPlanned(int? value) => setField<int>('meal_planned', value);
@@ -30,19 +30,17 @@ class DailyUserTrackRow extends SupabaseDataRow {
   int? get mealConsumed => getField<int>('meal_consumed');
   set mealConsumed(int? value) => setField<int>('meal_consumed', value);
 
-  double? get consumedCalories => getField<double>('consumed_calories');
-  set consumedCalories(double? value) =>
-      setField<double>('consumed_calories', value);
+  int? get consumedCalories => getField<int>('consumed_calories');
+  set consumedCalories(int? value) => setField<int>('consumed_calories', value);
 
-  double? get consumedCarbs => getField<double>('consumed_carbs');
-  set consumedCarbs(double? value) => setField<double>('consumed_carbs', value);
+  int? get consumedCarbs => getField<int>('consumed_carbs');
+  set consumedCarbs(int? value) => setField<int>('consumed_carbs', value);
 
-  double? get consumedFat => getField<double>('consumed_fat');
-  set consumedFat(double? value) => setField<double>('consumed_fat', value);
+  int? get consumedFat => getField<int>('consumed_fat');
+  set consumedFat(int? value) => setField<int>('consumed_fat', value);
 
-  double? get consumedProtein => getField<double>('consumed_protein');
-  set consumedProtein(double? value) =>
-      setField<double>('consumed_protein', value);
+  int? get consumedProtein => getField<int>('consumed_protein');
+  set consumedProtein(int? value) => setField<int>('consumed_protein', value);
 
   double? get caloriePercent => getField<double>('calorie_percent');
   set caloriePercent(double? value) =>

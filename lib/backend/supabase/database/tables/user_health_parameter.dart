@@ -21,24 +21,24 @@ class UserHealthParameterRow extends SupabaseDataRow {
   int? get userId => getField<int>('user_id');
   set userId(int? value) => setField<int>('user_id', value);
 
-  int? get userWeight => getField<int>('user_weight');
-  set userWeight(int? value) => setField<int>('user_weight', value);
+  int? get weight => getField<int>('weight');
+  set weight(int? value) => setField<int>('weight', value);
 
-  String? get userGender => getField<String>('user_gender');
-  set userGender(String? value) => setField<String>('user_gender', value);
+  String? get sex => getField<String>('sex');
+  set sex(String? value) => setField<String>('sex', value);
 
-  double? get userAge => getField<double>('user_age');
-  set userAge(double? value) => setField<double>('user_age', value);
+  int? get age => getField<int>('age');
+  set age(int? value) => setField<int>('age', value);
 
-  double? get userHeight => getField<double>('user_height');
-  set userHeight(double? value) => setField<double>('user_height', value);
+  double? get height => getField<double>('height');
+  set height(double? value) => setField<double>('height', value);
 
-  double? get userImc => getField<double>('user_imc');
-  set userImc(double? value) => setField<double>('user_imc', value);
+  double? get imc => getField<double>('imc');
+  set imc(double? value) => setField<double>('imc', value);
 
   String? get activityLevel => getField<String>('activity_level');
   set activityLevel(String? value) => setField<String>('activity_level', value);
 
-  int? get test => getField<int>('test');
-  set test(int? value) => setField<int>('test', value);
+  int? get currentWeight => getField<int>('current_weight');
+  set currentWeight(int? value) => setField<int>('current_weight', value);
 }

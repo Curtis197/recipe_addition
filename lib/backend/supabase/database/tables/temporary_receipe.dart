@@ -67,4 +67,7 @@ class TemporaryReceipeRow extends SupabaseDataRow {
 
   String? get difficulty => getField<String>('difficulty');
   set difficulty(String? value) => setField<String>('difficulty', value);
+
+  bool? get isCleaned => getField<bool>('is_cleaned');
+  set isCleaned(bool? value) => setField<bool>('is_cleaned', value);
 }

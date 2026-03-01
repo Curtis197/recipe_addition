@@ -13,7 +13,12 @@ import 'authentification_model.dart';
 export 'authentification_model.dart';
 
 class AuthentificationWidget extends StatefulWidget {
-  const AuthentificationWidget({super.key});
+  const AuthentificationWidget({
+    super.key,
+    bool? logIn,
+  }) : this.logIn = logIn ?? false;
+
+  final bool logIn;
 
   static String routeName = 'Authentification';
   static String routePath = '/authentification';
@@ -38,7 +43,12 @@ class _AuthentificationWidgetState extends State<AuthentificationWidget>
     _model.tabBarController = TabController(
       vsync: this,
       length: 2,
-      initialIndex: 0,
+      initialIndex: min(
+          valueOrDefault<int>(
+            widget.logIn ? 0 : 1,
+            0,
+          ),
+          1),
     )..addListener(() => safeSetState(() {}));
 
     _model.emailAddressTextController ??= TextEditingController();
@@ -176,35 +186,92 @@ class _AuthentificationWidgetState extends State<AuthentificationWidget>
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        16.0, 0.0, 0.0, 0.0),
-                                    child: Text(
-                                      'My.Ilera',
-                                      style: FlutterFlowTheme.of(context)
-                                          .headlineMedium
-                                          .override(
-                                            font: GoogleFonts.interTight(
-                                              fontWeight:
-                                                  FlutterFlowTheme.of(context)
-                                                      .headlineMedium
-                                                      .fontWeight,
-                                              fontStyle:
-                                                  FlutterFlowTheme.of(context)
-                                                      .headlineMedium
-                                                      .fontStyle,
-                                            ),
-                                            letterSpacing: 0.0,
-                                            fontWeight:
-                                                FlutterFlowTheme.of(context)
-                                                    .headlineMedium
-                                                    .fontWeight,
-                                            fontStyle:
-                                                FlutterFlowTheme.of(context)
-                                                    .headlineMedium
-                                                    .fontStyle,
-                                          ),
-                                    ),
+                                  Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      ClipRRect(
+                                        borderRadius:
+                                            BorderRadius.circular(8.0),
+                                        child: Image.asset(
+                                          'assets/images/20260126_1041_Purple_Leaf_Icon_remix_01kfwtrt0ce37bdqww9dwcxp4m.png',
+                                          width: () {
+                                            if (MediaQuery.sizeOf(context)
+                                                    .width <
+                                                kBreakpointSmall) {
+                                              return 100.0;
+                                            } else if (MediaQuery.sizeOf(
+                                                        context)
+                                                    .width <
+                                                kBreakpointMedium) {
+                                              return 150.0;
+                                            } else if (MediaQuery.sizeOf(
+                                                        context)
+                                                    .width <
+                                                kBreakpointLarge) {
+                                              return 175.0;
+                                            } else {
+                                              return 200.0;
+                                            }
+                                          }(),
+                                          height: () {
+                                            if (MediaQuery.sizeOf(context)
+                                                    .width <
+                                                kBreakpointSmall) {
+                                              return 100.0;
+                                            } else if (MediaQuery.sizeOf(
+                                                        context)
+                                                    .width <
+                                                kBreakpointMedium) {
+                                              return 150.0;
+                                            } else if (MediaQuery.sizeOf(
+                                                        context)
+                                                    .width <
+                                                kBreakpointLarge) {
+                                              return 175.0;
+                                            } else {
+                                              return 200.0;
+                                            }
+                                          }(),
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            16.0, 0.0, 0.0, 0.0),
+                                        child: Text(
+                                          'AKELI Créateur',
+                                          style: FlutterFlowTheme.of(context)
+                                              .headlineMedium
+                                              .override(
+                                                font: GoogleFonts.interTight(
+                                                  fontWeight:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .headlineMedium
+                                                          .fontWeight,
+                                                  fontStyle:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .headlineMedium
+                                                          .fontStyle,
+                                                ),
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .primary,
+                                                letterSpacing: 0.0,
+                                                fontWeight:
+                                                    FlutterFlowTheme.of(context)
+                                                        .headlineMedium
+                                                        .fontWeight,
+                                                fontStyle:
+                                                    FlutterFlowTheme.of(context)
+                                                        .headlineMedium
+                                                        .fontStyle,
+                                              ),
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ],
                               ),
@@ -229,7 +296,6 @@ class _AuthentificationWidgetState extends State<AuthentificationWidget>
                                 Align(
                                   alignment: Alignment(-1.0, 0),
                                   child: TabBar(
-                                    isScrollable: true,
                                     labelColor: FlutterFlowTheme.of(context)
                                         .primaryText,
                                     unselectedLabelColor:
@@ -249,6 +315,25 @@ class _AuthentificationWidgetState extends State<AuthentificationWidget>
                                                     .displaySmall
                                                     .fontStyle,
                                           ),
+                                          fontSize: () {
+                                            if (MediaQuery.sizeOf(context)
+                                                    .width <
+                                                kBreakpointSmall) {
+                                              return 20.0;
+                                            } else if (MediaQuery.sizeOf(
+                                                        context)
+                                                    .width <
+                                                kBreakpointMedium) {
+                                              return 24.0;
+                                            } else if (MediaQuery.sizeOf(
+                                                        context)
+                                                    .width <
+                                                kBreakpointLarge) {
+                                              return 30.0;
+                                            } else {
+                                              return 34.0;
+                                            }
+                                          }(),
                                           letterSpacing: 0.0,
                                           fontWeight:
                                               FlutterFlowTheme.of(context)
@@ -270,6 +355,25 @@ class _AuthentificationWidgetState extends State<AuthentificationWidget>
                                                         .displaySmall
                                                         .fontStyle,
                                               ),
+                                              fontSize: () {
+                                                if (MediaQuery.sizeOf(context)
+                                                        .width <
+                                                    kBreakpointSmall) {
+                                                  return 20.0;
+                                                } else if (MediaQuery.sizeOf(
+                                                            context)
+                                                        .width <
+                                                    kBreakpointMedium) {
+                                                  return 24.0;
+                                                } else if (MediaQuery.sizeOf(
+                                                            context)
+                                                        .width <
+                                                    kBreakpointLarge) {
+                                                  return 30.0;
+                                                } else {
+                                                  return 34.0;
+                                                }
+                                              }(),
                                               letterSpacing: 0.0,
                                               fontWeight: FontWeight.normal,
                                               fontStyle:
@@ -472,7 +576,7 @@ class _AuthentificationWidgetState extends State<AuthentificationWidget>
                                                     obscureText: !_model
                                                         .passwordVisibility,
                                                     decoration: InputDecoration(
-                                                      labelText: 'Password',
+                                                      labelText: 'Mot de Passe',
                                                       labelStyle:
                                                           FlutterFlowTheme.of(
                                                                   context)
@@ -645,11 +749,10 @@ class _AuthentificationWidgetState extends State<AuthentificationWidget>
                                                       }
 
                                                       context.goNamedAuth(
-                                                          AccueilWidget
-                                                              .routeName,
+                                                          HomeWidget.routeName,
                                                           context.mounted);
                                                     },
-                                                    text: 'Sign In',
+                                                    text: 'Se connecter',
                                                     options: FFButtonOptions(
                                                       width: 230.0,
                                                       height: 52.0,
@@ -725,7 +828,7 @@ class _AuthentificationWidgetState extends State<AuthentificationWidget>
                                                       print(
                                                           'Button pressed ...');
                                                     },
-                                                    text: 'Forgot Password',
+                                                    text: 'Mot de passe oublié',
                                                     options: FFButtonOptions(
                                                       width: 230.0,
                                                       height: 44.0,
@@ -805,42 +908,6 @@ class _AuthentificationWidgetState extends State<AuthentificationWidget>
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.start,
                                             children: [
-                                              Padding(
-                                                padding: EdgeInsetsDirectional
-                                                    .fromSTEB(
-                                                        0.0, 12.0, 0.0, 24.0),
-                                                child: Text(
-                                                  'Let\'s get started by filling out the form below.',
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .labelMedium
-                                                      .override(
-                                                        font: GoogleFonts.inter(
-                                                          fontWeight:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .labelMedium
-                                                                  .fontWeight,
-                                                          fontStyle:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .labelMedium
-                                                                  .fontStyle,
-                                                        ),
-                                                        letterSpacing: 0.0,
-                                                        fontWeight:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .labelMedium
-                                                                .fontWeight,
-                                                        fontStyle:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .labelMedium
-                                                                .fontStyle,
-                                                      ),
-                                                ),
-                                              ),
                                               Padding(
                                                 padding: EdgeInsetsDirectional
                                                     .fromSTEB(
@@ -1001,7 +1068,7 @@ class _AuthentificationWidgetState extends State<AuthentificationWidget>
                                                     obscureText: !_model
                                                         .passwordCreateVisibility,
                                                     decoration: InputDecoration(
-                                                      labelText: 'Password',
+                                                      labelText: 'Mot de Passe',
                                                       labelStyle:
                                                           FlutterFlowTheme.of(
                                                                   context)
@@ -1165,7 +1232,7 @@ class _AuthentificationWidgetState extends State<AuthentificationWidget>
                                                         .passwordConfirmVisibility,
                                                     decoration: InputDecoration(
                                                       labelText:
-                                                          'Confirm Password',
+                                                          'Confirmez votre mot de passe',
                                                       labelStyle:
                                                           FlutterFlowTheme.of(
                                                                   context)
@@ -1362,13 +1429,12 @@ class _AuthentificationWidgetState extends State<AuthentificationWidget>
                                                       });
 
                                                       context.goNamedAuth(
-                                                          AccueilWidget
-                                                              .routeName,
+                                                          HomeWidget.routeName,
                                                           context.mounted);
 
                                                       safeSetState(() {});
                                                     },
-                                                    text: 'Create Account',
+                                                    text: 'Créer un compte',
                                                     options: FFButtonOptions(
                                                       width: 230.0,
                                                       height: 52.0,

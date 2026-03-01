@@ -274,12 +274,18 @@ dynamic deserializeParam<T>(
             return UnitRow(data);
           case MealPlanRow:
             return MealPlanRow(data);
-          case WeightProgressRow:
-            return WeightProgressRow(data);
+          case CreatorCommunityPostLikeRow:
+            return CreatorCommunityPostLikeRow(data);
+          case CreatorWeeklyRevenueChartRow:
+            return CreatorWeeklyRevenueChartRow(data);
           case ShoppingListTotalsRow:
             return ShoppingListTotalsRow(data);
           case CreatorCommentRow:
             return CreatorCommentRow(data);
+          case MessageReadRow:
+            return MessageReadRow(data);
+          case CreatorDashboardStatsRow:
+            return CreatorDashboardStatsRow(data);
           case RecomandedReceipeRow:
             return RecomandedReceipeRow(data);
           case EatingStyleRow:
@@ -290,16 +296,24 @@ dynamic deserializeParam<T>(
             return ShoppingListSummaryRow(data);
           case UserHealthParameterRow:
             return UserHealthParameterRow(data);
+          case TotalNotificationsRow:
+            return TotalNotificationsRow(data);
+          case RecipePerformanceSummaryRow:
+            return RecipePerformanceSummaryRow(data);
           case ChatMessageRow:
             return ChatMessageRow(data);
           case UpdatedWeightRow:
             return UpdatedWeightRow(data);
+          case ActivityLevelRow:
+            return ActivityLevelRow(data);
           case DietTypeRow:
             return DietTypeRow(data);
           case UserMoodRow:
             return UserMoodRow(data);
           case UserPreferencesRow:
             return UserPreferencesRow(data);
+          case RecipeDetailedPerformanceRow:
+            return RecipeDetailedPerformanceRow(data);
           case ReceipeMacroRow:
             return ReceipeMacroRow(data);
           case ConversationGroupRow:
@@ -312,14 +326,30 @@ dynamic deserializeParam<T>(
             return ReceipeLikesRow(data);
           case CommentLikeRow:
             return CommentLikeRow(data);
+          case AllCreatorRecipesRow:
+            return AllCreatorRecipesRow(data);
+          case CreatorWeeklyRevenueRow:
+            return CreatorWeeklyRevenueRow(data);
           case ReferralViewRow:
             return ReferralViewRow(data);
+          case CreatorStripeAccountRow:
+            return CreatorStripeAccountRow(data);
+          case CreatorRecipeSummaryRow:
+            return CreatorRecipeSummaryRow(data);
+          case MealTypeRow:
+            return MealTypeRow(data);
           case MessageTimeRow:
             return MessageTimeRow(data);
           case ReceipeTagsRow:
             return ReceipeTagsRow(data);
+          case SupportRow:
+            return SupportRow(data);
           case CreatorFoodSpecialtyRow:
             return CreatorFoodSpecialtyRow(data);
+          case RecipeWeeklyRevenueChartRow:
+            return RecipeWeeklyRevenueChartRow(data);
+          case CreatorCommunityPostRow:
+            return CreatorCommunityPostRow(data);
           case AiPlanFeedbackRow:
             return AiPlanFeedbackRow(data);
           case TemporaryReceipeRow:
@@ -330,8 +360,16 @@ dynamic deserializeParam<T>(
             return TestIndexRow(data);
           case ConversationDemandDeleteRow:
             return ConversationDemandDeleteRow(data);
+          case CreatorPerformanceSummaryRow:
+            return CreatorPerformanceSummaryRow(data);
+          case CreatorCommunityMemberRow:
+            return CreatorCommunityMemberRow(data);
           case ShoppingIngredientRow:
             return ShoppingIngredientRow(data);
+          case CreatorCommunityGroupRow:
+            return CreatorCommunityGroupRow(data);
+          case UserReferralMonthlyStatsRow:
+            return UserReferralMonthlyStatsRow(data);
           case ConversationDemandRow:
             return ConversationDemandRow(data);
           case FoodRegionRow:
@@ -346,6 +384,8 @@ dynamic deserializeParam<T>(
             return UserMoodInfoRow(data);
           case NotificationTemplatesRow:
             return NotificationTemplatesRow(data);
+          case WaitlistRow:
+            return WaitlistRow(data);
           case ConversationParticipantRow:
             return ConversationParticipantRow(data);
           case LastMessageTimeRow:
@@ -366,12 +406,22 @@ dynamic deserializeParam<T>(
             return AiAssistantActionRow(data);
           case RoundTypeRow:
             return RoundTypeRow(data);
-          case UsersEatingPreferencesRow:
-            return UsersEatingPreferencesRow(data);
           case UserAllergiesRow:
             return UserAllergiesRow(data);
+          case PaymentHistoryEnrichedRow:
+            return PaymentHistoryEnrichedRow(data);
+          case CreatorMonthlyRevenueRow:
+            return CreatorMonthlyRevenueRow(data);
           case UserGoalRow:
             return UserGoalRow(data);
+          case RecipePerformanceLatestRow:
+            return RecipePerformanceLatestRow(data);
+          case WeightGraphDataRow:
+            return WeightGraphDataRow(data);
+          case RecipePerformanceRow:
+            return RecipePerformanceRow(data);
+          case UserReferralRow:
+            return UserReferralRow(data);
           case DirectConversationsWithOtherUserRow:
             return DirectConversationsWithOtherUserRow(data);
           case ChatNotificationsRow:
@@ -390,10 +440,16 @@ dynamic deserializeParam<T>(
             return ChatConversationRow(data);
           case TagsRow:
             return TagsRow(data);
+          case CreatorPayoutRow:
+            return CreatorPayoutRow(data);
           case DailyUserTrackRow:
             return DailyUserTrackRow(data);
           case UsersRow:
             return UsersRow(data);
+          case TopRecipesByRevenueRow:
+            return TopRecipesByRevenueRow(data);
+          case CreatorRevenueRow:
+            return CreatorRevenueRow(data);
           case GetReferralRevenueRow:
             return GetReferralRevenueRow(data);
           case ConversationRow:
@@ -404,6 +460,8 @@ dynamic deserializeParam<T>(
             return DifficultyRow(data);
           case CreatorImageRow:
             return CreatorImageRow(data);
+          case RecipeWeeklyRevenueRow:
+            return RecipeWeeklyRevenueRow(data);
           case MealNotificationsRow:
             return MealNotificationsRow(data);
           case CreatorDietSpecialtyRow:
@@ -414,6 +472,10 @@ dynamic deserializeParam<T>(
             return NotificationsRow(data);
           case UserTrackRow:
             return UserTrackRow(data);
+          case UserReferralCodeRow:
+            return UserReferralCodeRow(data);
+          case AiMemoryRow:
+            return AiMemoryRow(data);
           default:
             return null;
         }

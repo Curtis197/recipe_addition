@@ -1,22 +1,18 @@
 // Export pages
-export '/receipe/receipe/receipe_widget.dart' show ReceipeWidget;
-export '/pages/accueil/accueil_widget.dart' show AccueilWidget;
 export '/pages/authentification/authentification_widget.dart'
     show AuthentificationWidget;
-export '/receipe/edit_temporary_receipe/edit_temporary_receipe_widget.dart'
-    show EditTemporaryReceipeWidget;
-export '/receipe/receipe_detail/receipe_detail_widget.dart'
-    show ReceipeDetailWidget;
-export '/revenue/revenue_widget.dart' show RevenueWidget;
-export '/profile13_responsive/profile13_responsive_widget.dart'
-    show Profile13ResponsiveWidget;
-export '/receipe/temporary_receipe_detail/temporary_receipe_detail_widget.dart'
-    show TemporaryReceipeDetailWidget;
-export '/receipe/edit_receipe/edit_receipe_widget.dart' show EditReceipeWidget;
-export '/receipe/create_receipe/create_receipe_widget.dart'
-    show CreateReceipeWidget;
-export '/test_accueil/test_accueil_widget.dart' show TestAccueilWidget;
-export '/receipe/temporary_receipe_detail_copy/temporary_receipe_detail_copy_widget.dart'
-    show TemporaryReceipeDetailCopyWidget;
-export '/receipe/receipe_detail_web/receipe_detail_web_widget.dart'
-    show ReceipeDetailWebWidget;
+export '/pages/landing_page/landing_page_widget.dart' show LandingPageWidget;
+export '/pages/home/home_widget.dart' show HomeWidget;
+export '/dashboard_revenue/dashboard_revenue_widget.dart'
+    show DashboardRevenueWidget;
+export '/recipes/recipes_widget.dart' show RecipesWidget;
+export '/recipes_detail/recipes_detail_widget.dart' show RecipesDetailWidget;
+export '/parrainage_utilisateur/parrainage_utilisateur_widget.dart'
+    show ParrainageUtilisateurWidget;
+export '/create_recipe/create_recipe_widget.dart' show CreateRecipeWidget;
+export '/settings/settings_widget.dart' show SettingsWidget;
+export '/edit_recipe/edit_recipe_widget.dart' show EditRecipeWidget;
+export '/edit_draft_recipe/edit_draft_recipe_widget.dart'
+    show EditDraftRecipeWidget;
+export '/recipes_detail_copy/recipes_detail_copy_widget.dart'
+    show RecipesDetailCopyWidget;

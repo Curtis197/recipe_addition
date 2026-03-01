@@ -1,7 +1,7 @@
 import '/backend/supabase/supabase.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import '/receipe/insert_step/insert_step_widget.dart';
+import '/receipe/update_step/update_step_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -107,9 +107,9 @@ class _StepWidgetState extends State<StepWidget> {
                         children: [
                           Expanded(
                             child: wrapWithModel(
-                              model: _model.insertStepModel,
+                              model: _model.updateStepModel,
                               updateCallback: () => safeSetState(() {}),
-                              child: InsertStepWidget(
+                              child: UpdateStepWidget(
                                 step: conditionalBuilderStepRow,
                               ),
                             ),
@@ -122,13 +122,12 @@ class _StepWidgetState extends State<StepWidget> {
                             onTap: () async {
                               await StepTable().update(
                                 data: {
-                                  'text': _model
-                                      .insertStepModel.textTextController.text,
-                                  'number': double.tryParse(_model
-                                      .insertStepModel
-                                      .numberTextController
-                                      .text),
-                                  'title': _model.insertStepModel.checkboxValue,
+                                  'text': _model.updateStepModel
+                                      .textPCTextController.text,
+                                  'number': int.tryParse(_model.updateStepModel
+                                      .numberPCTextController.text),
+                                  'title':
+                                      _model.updateStepModel.checkboxPCValue,
                                 },
                                 matchingRows: (rows) => rows.eqOrNull(
                                   'id',

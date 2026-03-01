@@ -39,4 +39,8 @@ class UserSubscriptionRow extends SupabaseDataRow {
 
   int? get referralId => getField<int>('referral_id');
   set referralId(int? value) => setField<int>('referral_id', value);
+
+  DateTime? get lastConnection => getField<DateTime>('last_connection');
+  set lastConnection(DateTime? value) =>
+      setField<DateTime>('last_connection', value);
 }

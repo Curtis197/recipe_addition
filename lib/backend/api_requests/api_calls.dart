@@ -62,6 +62,31 @@ class SupabaseGroup {
   static SelectIngredientCall selectIngredientCall = SelectIngredientCall();
   static UpdateIngredientIndexCall updateIngredientIndexCall =
       UpdateIngredientIndexCall();
+  static HardDeleteRecipeCall hardDeleteRecipeCall = HardDeleteRecipeCall();
+  static CreatoRecipeStatsCall creatoRecipeStatsCall = CreatoRecipeStatsCall();
+  static GetCompleteRecipeDataCall getCompleteRecipeDataCall =
+      GetCompleteRecipeDataCall();
+  static GetCreatorRecipesCall getCreatorRecipesCall = GetCreatorRecipesCall();
+  static GetRecipesDetailsCall getRecipesDetailsCall = GetRecipesDetailsCall();
+  static GetDashboardStatsCall getDashboardStatsCall = GetDashboardStatsCall();
+  static GetMonthlyDashboardCall getMonthlyDashboardCall =
+      GetMonthlyDashboardCall();
+  static GetRecipesPerfomancesCall getRecipesPerfomancesCall =
+      GetRecipesPerfomancesCall();
+  static GetPaymentHistoryCall getPaymentHistoryCall = GetPaymentHistoryCall();
+  static GetMonthlyReferralRevenueCall getMonthlyReferralRevenueCall =
+      GetMonthlyReferralRevenueCall();
+  static GetUserReferralCodeCall getUserReferralCodeCall =
+      GetUserReferralCodeCall();
+  static GetRecipesStepsCall getRecipesStepsCall = GetRecipesStepsCall();
+  static GetRecipeIngredientsCall getRecipeIngredientsCall =
+      GetRecipeIngredientsCall();
+  static GetCreatorWeeklyChartCall getCreatorWeeklyChartCall =
+      GetCreatorWeeklyChartCall();
+  static GetRecipeWeeklyChartCall getRecipeWeeklyChartCall =
+      GetRecipeWeeklyChartCall();
+  static TemporaryRecipeCleanerCall temporaryRecipeCleanerCall =
+      TemporaryRecipeCleanerCall();
 }
 
 class ReceipeinfoCall {
@@ -850,7 +875,7 @@ class ReceipeCleanerCall {
 }''';
     return ApiManager.instance.makeApiCall(
       callName: 'receipe cleaner',
-      apiUrl: '${baseUrl}/functions/v1/dynamic-processor',
+      apiUrl: '${baseUrl}/functions/v1/receipe_cleaner',
       callType: ApiCallType.POST,
       headers: {
         'Authorization': 'Bearer ${apiKey}',
@@ -1520,6 +1545,831 @@ class UpdateIngredientIndexCall {
     return ApiManager.instance.makeApiCall(
       callName: 'update ingredient index',
       apiUrl: '${baseUrl}/functions/v1/modify_ingredients_index',
+      callType: ApiCallType.POST,
+      headers: {
+        'Authorization': 'Bearer ${apiKey}',
+      },
+      params: {},
+      body: ffApiRequestBody,
+      bodyType: BodyType.JSON,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+}
+
+class HardDeleteRecipeCall {
+  Future<ApiCallResponse> call({
+    String? creatorId = '',
+    int? receipeId,
+    String? apiKey,
+    String? apiUrl,
+    String? type = '',
+  }) async {
+    apiKey ??= FFDevEnvironmentValues().ApiKey;
+    apiUrl ??= FFDevEnvironmentValues().ApiUrl;
+    final baseUrl = SupabaseGroup.getBaseUrl(
+      creatorId: creatorId,
+      receipeId: receipeId,
+      apiKey: apiKey,
+      apiUrl: apiUrl,
+      type: type,
+    );
+
+    final ffApiRequestBody = '''
+{
+  "recipe_id": ${receipeId}
+}''';
+    return ApiManager.instance.makeApiCall(
+      callName: 'hard delete recipe',
+      apiUrl: '${baseUrl}/functions/v1/hard-delete-recipe',
+      callType: ApiCallType.POST,
+      headers: {
+        'Authorization': 'Bearer ${apiKey}',
+      },
+      params: {},
+      body: ffApiRequestBody,
+      bodyType: BodyType.JSON,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+}
+
+class CreatoRecipeStatsCall {
+  Future<ApiCallResponse> call({
+    String? period = '',
+    String? creatorId = '',
+    int? receipeId,
+    String? apiKey,
+    String? apiUrl,
+    String? type = '',
+  }) async {
+    apiKey ??= FFDevEnvironmentValues().ApiKey;
+    apiUrl ??= FFDevEnvironmentValues().ApiUrl;
+    final baseUrl = SupabaseGroup.getBaseUrl(
+      creatorId: creatorId,
+      receipeId: receipeId,
+      apiKey: apiKey,
+      apiUrl: apiUrl,
+      type: type,
+    );
+
+    final ffApiRequestBody = '''
+{
+  "creator_id": "${escapeStringForJson(creatorId)}",
+  "period": "${escapeStringForJson(period)}"
+}''';
+    return ApiManager.instance.makeApiCall(
+      callName: 'creato recipe stats',
+      apiUrl: '${baseUrl}/functions/v1/creator-recipe-stats',
+      callType: ApiCallType.POST,
+      headers: {
+        'Authorization': 'Bearer ${apiKey}',
+      },
+      params: {},
+      body: ffApiRequestBody,
+      bodyType: BodyType.JSON,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+
+  List? dailyConsumption(dynamic response) => getJsonField(
+        response,
+        r'''$.daily_consumption''',
+        true,
+      ) as List?;
+  List<int>? counts(dynamic response) => (getJsonField(
+        response,
+        r'''$.daily_consumption[:].count''',
+        true,
+      ) as List?)
+          ?.withoutNulls
+          .map((x) => castToType<int>(x))
+          .withoutNulls
+          .toList();
+  List<String>? dates(dynamic response) => (getJsonField(
+        response,
+        r'''$.daily_consumption[:].date''',
+        true,
+      ) as List?)
+          ?.withoutNulls
+          .map((x) => castToType<String>(x))
+          .withoutNulls
+          .toList();
+  String? startDate(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.start_date''',
+      ));
+  String? period(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.period''',
+      ));
+  String? endDate(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.end_date''',
+      ));
+  int? totalConsumed(dynamic response) => castToType<int>(getJsonField(
+        response,
+        r'''$.total_consumed''',
+      ));
+  int? revenueEarned(dynamic response) => castToType<int>(getJsonField(
+        response,
+        r'''$.revenue_earned''',
+      ));
+  int? progress(dynamic response) => castToType<int>(getJsonField(
+        response,
+        r'''$.progress_to_next_euro''',
+      ));
+}
+
+class GetCompleteRecipeDataCall {
+  Future<ApiCallResponse> call({
+    String? creatorId = '',
+    int? receipeId,
+    String? apiKey,
+    String? apiUrl,
+    String? type = '',
+  }) async {
+    apiKey ??= FFDevEnvironmentValues().ApiKey;
+    apiUrl ??= FFDevEnvironmentValues().ApiUrl;
+    final baseUrl = SupabaseGroup.getBaseUrl(
+      creatorId: creatorId,
+      receipeId: receipeId,
+      apiKey: apiKey,
+      apiUrl: apiUrl,
+      type: type,
+    );
+
+    final ffApiRequestBody = '''
+{
+  "recipe_id": ${receipeId}
+}''';
+    return ApiManager.instance.makeApiCall(
+      callName: 'get complete recipe data',
+      apiUrl: '${baseUrl}/functions/v1/get-complete-recipe-data',
+      callType: ApiCallType.POST,
+      headers: {
+        'Authorization': 'Bearer ${apiKey}',
+      },
+      params: {},
+      body: ffApiRequestBody,
+      bodyType: BodyType.JSON,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+}
+
+class GetCreatorRecipesCall {
+  Future<ApiCallResponse> call({
+    String? name = '',
+    String? sort = '',
+    String? filter = '',
+    String? region = '',
+    String? creatorId = '',
+    int? receipeId,
+    String? apiKey,
+    String? apiUrl,
+    String? type = '',
+  }) async {
+    apiKey ??= FFDevEnvironmentValues().ApiKey;
+    apiUrl ??= FFDevEnvironmentValues().ApiUrl;
+    final baseUrl = SupabaseGroup.getBaseUrl(
+      creatorId: creatorId,
+      receipeId: receipeId,
+      apiKey: apiKey,
+      apiUrl: apiUrl,
+      type: type,
+    );
+
+    final ffApiRequestBody = '''
+{
+  "creator_id": "${escapeStringForJson(creatorId)}",
+  "sort_by": "${escapeStringForJson(sort)}",
+  "filter": "${escapeStringForJson(filter)}",
+  "search_name": "${escapeStringForJson(name)}",
+  "food_region": "${escapeStringForJson(region)}",
+  "recipe_type": "${escapeStringForJson(type)}"
+}''';
+    return ApiManager.instance.makeApiCall(
+      callName: 'get creator recipes',
+      apiUrl: '${baseUrl}/functions/v1/get-creator-recipes',
+      callType: ApiCallType.POST,
+      headers: {
+        'Authorization': 'Bearer ${apiKey}',
+      },
+      params: {},
+      body: ffApiRequestBody,
+      bodyType: BodyType.JSON,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+
+  List? recipes(dynamic response) => getJsonField(
+        response,
+        r'''$.recipes''',
+        true,
+      ) as List?;
+  int? published(dynamic response) => castToType<int>(getJsonField(
+        response,
+        r'''$.published_count''',
+      ));
+  int? totalCount(dynamic response) => castToType<int>(getJsonField(
+        response,
+        r'''$.total_count''',
+      ));
+  int? teporaryCount(dynamic response) => castToType<int>(getJsonField(
+        response,
+        r'''$.temporary_count''',
+      ));
+  int? totalConsumer(dynamic response) => castToType<int>(getJsonField(
+        response,
+        r'''$.creator_stats.total_consumers''',
+      ));
+  double? totalRevenue(dynamic response) => castToType<double>(getJsonField(
+        response,
+        r'''$.creator_stats.total_revenue''',
+      ));
+}
+
+class GetRecipesDetailsCall {
+  Future<ApiCallResponse> call({
+    String? creatorId = '',
+    int? receipeId,
+    String? apiKey,
+    String? apiUrl,
+    String? type = '',
+  }) async {
+    apiKey ??= FFDevEnvironmentValues().ApiKey;
+    apiUrl ??= FFDevEnvironmentValues().ApiUrl;
+    final baseUrl = SupabaseGroup.getBaseUrl(
+      creatorId: creatorId,
+      receipeId: receipeId,
+      apiKey: apiKey,
+      apiUrl: apiUrl,
+      type: type,
+    );
+
+    final ffApiRequestBody = '''
+{"recipe_id":${receipeId}}''';
+    return ApiManager.instance.makeApiCall(
+      callName: 'get recipes details',
+      apiUrl: '${baseUrl}/functions/v1/get-recipes-details',
+      callType: ApiCallType.POST,
+      headers: {
+        'Authorization': 'Bearer ${apiKey}',
+      },
+      params: {},
+      body: ffApiRequestBody,
+      bodyType: BodyType.JSON,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+
+  List? chartData(dynamic response) => getJsonField(
+        response,
+        r'''$.recipe.current_week.chart_data''',
+        true,
+      ) as List?;
+  List<String>? label(dynamic response) => (getJsonField(
+        response,
+        r'''$.recipe.current_week.chart_data[:].label''',
+        true,
+      ) as List?)
+          ?.withoutNulls
+          .map((x) => castToType<String>(x))
+          .withoutNulls
+          .toList();
+  List<int>? value(dynamic response) => (getJsonField(
+        response,
+        r'''$.recipe.current_week.chart_data[:].value''',
+        true,
+      ) as List?)
+          ?.withoutNulls
+          .map((x) => castToType<int>(x))
+          .withoutNulls
+          .toList();
+}
+
+class GetDashboardStatsCall {
+  Future<ApiCallResponse> call({
+    String? creatorId = '',
+    int? receipeId,
+    String? apiKey,
+    String? apiUrl,
+    String? type = '',
+  }) async {
+    apiKey ??= FFDevEnvironmentValues().ApiKey;
+    apiUrl ??= FFDevEnvironmentValues().ApiUrl;
+    final baseUrl = SupabaseGroup.getBaseUrl(
+      creatorId: creatorId,
+      receipeId: receipeId,
+      apiKey: apiKey,
+      apiUrl: apiUrl,
+      type: type,
+    );
+
+    final ffApiRequestBody = '''
+{
+  "creator_id": "${escapeStringForJson(creatorId)}"
+}''';
+    return ApiManager.instance.makeApiCall(
+      callName: 'get dashboard stats',
+      apiUrl: '${baseUrl}/functions/v1/get-dashboard-stats',
+      callType: ApiCallType.POST,
+      headers: {
+        'Authorization': 'Bearer ${apiKey}',
+      },
+      params: {},
+      body: ffApiRequestBody,
+      bodyType: BodyType.JSON,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+}
+
+class GetMonthlyDashboardCall {
+  Future<ApiCallResponse> call({
+    String? creatorId = '',
+    int? receipeId,
+    String? apiKey,
+    String? apiUrl,
+    String? type = '',
+  }) async {
+    apiKey ??= FFDevEnvironmentValues().ApiKey;
+    apiUrl ??= FFDevEnvironmentValues().ApiUrl;
+    final baseUrl = SupabaseGroup.getBaseUrl(
+      creatorId: creatorId,
+      receipeId: receipeId,
+      apiKey: apiKey,
+      apiUrl: apiUrl,
+      type: type,
+    );
+
+    final ffApiRequestBody = '''
+{
+  "creator_id": "${escapeStringForJson(creatorId)}"
+}''';
+    return ApiManager.instance.makeApiCall(
+      callName: 'get monthly dashboard',
+      apiUrl: '${baseUrl}/functions/v1/get-monthly-dashboard',
+      callType: ApiCallType.POST,
+      headers: {
+        'Authorization': 'Bearer ${apiKey}',
+      },
+      params: {},
+      body: ffApiRequestBody,
+      bodyType: BodyType.JSON,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+
+  dynamic dailyMealConsumed(dynamic response) => getJsonField(
+        response,
+        r'''$.daily_meals_consumed''',
+      );
+}
+
+class GetRecipesPerfomancesCall {
+  Future<ApiCallResponse> call({
+    String? creatorId = '',
+    int? receipeId,
+    String? apiKey,
+    String? apiUrl,
+    String? type = '',
+  }) async {
+    apiKey ??= FFDevEnvironmentValues().ApiKey;
+    apiUrl ??= FFDevEnvironmentValues().ApiUrl;
+    final baseUrl = SupabaseGroup.getBaseUrl(
+      creatorId: creatorId,
+      receipeId: receipeId,
+      apiKey: apiKey,
+      apiUrl: apiUrl,
+      type: type,
+    );
+
+    final ffApiRequestBody = '''
+{
+  "creator_id": "${escapeStringForJson(creatorId)}"
+}''';
+    return ApiManager.instance.makeApiCall(
+      callName: 'get recipes perfomances',
+      apiUrl: '${baseUrl}/functions/v1/get-recipes-perfomaces',
+      callType: ApiCallType.POST,
+      headers: {
+        'Authorization': 'Bearer ${apiKey}',
+      },
+      params: {},
+      body: ffApiRequestBody,
+      bodyType: BodyType.JSON,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+}
+
+class GetPaymentHistoryCall {
+  Future<ApiCallResponse> call({
+    String? creatorId = '',
+    int? receipeId,
+    String? apiKey,
+    String? apiUrl,
+    String? type = '',
+  }) async {
+    apiKey ??= FFDevEnvironmentValues().ApiKey;
+    apiUrl ??= FFDevEnvironmentValues().ApiUrl;
+    final baseUrl = SupabaseGroup.getBaseUrl(
+      creatorId: creatorId,
+      receipeId: receipeId,
+      apiKey: apiKey,
+      apiUrl: apiUrl,
+      type: type,
+    );
+
+    final ffApiRequestBody = '''
+{
+  "creator_id": "${escapeStringForJson(creatorId)}"
+}''';
+    return ApiManager.instance.makeApiCall(
+      callName: 'get payment history',
+      apiUrl: '${baseUrl}/functions/v1/get-payment-history',
+      callType: ApiCallType.POST,
+      headers: {
+        'Authorization': 'Bearer ${apiKey}',
+      },
+      params: {},
+      body: ffApiRequestBody,
+      bodyType: BodyType.JSON,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+}
+
+class GetMonthlyReferralRevenueCall {
+  Future<ApiCallResponse> call({
+    int? userId,
+    String? creatorId = '',
+    int? receipeId,
+    String? apiKey,
+    String? apiUrl,
+    String? type = '',
+  }) async {
+    apiKey ??= FFDevEnvironmentValues().ApiKey;
+    apiUrl ??= FFDevEnvironmentValues().ApiUrl;
+    final baseUrl = SupabaseGroup.getBaseUrl(
+      creatorId: creatorId,
+      receipeId: receipeId,
+      apiKey: apiKey,
+      apiUrl: apiUrl,
+      type: type,
+    );
+
+    final ffApiRequestBody = '''
+{
+  "user_id": ${userId}
+}''';
+    return ApiManager.instance.makeApiCall(
+      callName: 'get monthly referral revenue',
+      apiUrl: '${baseUrl}/functions/v1/get-monthly-referral-revenue',
+      callType: ApiCallType.POST,
+      headers: {
+        'Authorization': 'Bearer ${apiKey}',
+      },
+      params: {},
+      body: ffApiRequestBody,
+      bodyType: BodyType.JSON,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+
+  List<String>? month(dynamic response) => (getJsonField(
+        response,
+        r'''$.monthly_data[:].month''',
+        true,
+      ) as List?)
+          ?.withoutNulls
+          .map((x) => castToType<String>(x))
+          .withoutNulls
+          .toList();
+  List<int>? revenue(dynamic response) => (getJsonField(
+        response,
+        r'''$.monthly_data[:].revenue''',
+        true,
+      ) as List?)
+          ?.withoutNulls
+          .map((x) => castToType<int>(x))
+          .withoutNulls
+          .toList();
+}
+
+class GetUserReferralCodeCall {
+  Future<ApiCallResponse> call({
+    int? userId,
+    String? creatorId = '',
+    int? receipeId,
+    String? apiKey,
+    String? apiUrl,
+    String? type = '',
+  }) async {
+    apiKey ??= FFDevEnvironmentValues().ApiKey;
+    apiUrl ??= FFDevEnvironmentValues().ApiUrl;
+    final baseUrl = SupabaseGroup.getBaseUrl(
+      creatorId: creatorId,
+      receipeId: receipeId,
+      apiKey: apiKey,
+      apiUrl: apiUrl,
+      type: type,
+    );
+
+    final ffApiRequestBody = '''
+{
+  "user_id": ${userId}
+}''';
+    return ApiManager.instance.makeApiCall(
+      callName: 'get user referral code',
+      apiUrl: '${baseUrl}/functions/v1/get-user-referral-code',
+      callType: ApiCallType.POST,
+      headers: {
+        'Authorization': 'Bearer ${apiKey}',
+      },
+      params: {},
+      body: ffApiRequestBody,
+      bodyType: BodyType.JSON,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+}
+
+class GetRecipesStepsCall {
+  Future<ApiCallResponse> call({
+    String? creatorId = '',
+    int? receipeId,
+    String? apiKey,
+    String? apiUrl,
+    String? type = '',
+  }) async {
+    apiKey ??= FFDevEnvironmentValues().ApiKey;
+    apiUrl ??= FFDevEnvironmentValues().ApiUrl;
+    final baseUrl = SupabaseGroup.getBaseUrl(
+      creatorId: creatorId,
+      receipeId: receipeId,
+      apiKey: apiKey,
+      apiUrl: apiUrl,
+      type: type,
+    );
+
+    final ffApiRequestBody = '''
+{
+  "recipe_id": ${receipeId}
+}''';
+    return ApiManager.instance.makeApiCall(
+      callName: 'get recipes steps',
+      apiUrl: '${baseUrl}/functions/v1/get-recipe-steps',
+      callType: ApiCallType.POST,
+      headers: {
+        'Authorization': 'Bearer ${apiKey}',
+      },
+      params: {},
+      body: ffApiRequestBody,
+      bodyType: BodyType.JSON,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+
+  List? steps(dynamic response) => getJsonField(
+        response,
+        r'''$.steps_data''',
+        true,
+      ) as List?;
+}
+
+class GetRecipeIngredientsCall {
+  Future<ApiCallResponse> call({
+    String? creatorId = '',
+    int? receipeId,
+    String? apiKey,
+    String? apiUrl,
+    String? type = '',
+  }) async {
+    apiKey ??= FFDevEnvironmentValues().ApiKey;
+    apiUrl ??= FFDevEnvironmentValues().ApiUrl;
+    final baseUrl = SupabaseGroup.getBaseUrl(
+      creatorId: creatorId,
+      receipeId: receipeId,
+      apiKey: apiKey,
+      apiUrl: apiUrl,
+      type: type,
+    );
+
+    final ffApiRequestBody = '''
+{
+  "recipe_id": ${receipeId}
+}''';
+    return ApiManager.instance.makeApiCall(
+      callName: 'get recipe ingredients',
+      apiUrl: '${baseUrl}/functions/v1/get-recipe-ingredients',
+      callType: ApiCallType.POST,
+      headers: {
+        'Authorization': 'Bearer ${apiKey}',
+      },
+      params: {},
+      body: ffApiRequestBody,
+      bodyType: BodyType.JSON,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+
+  List? ingreients(dynamic response) => getJsonField(
+        response,
+        r'''$.ingredients_data''',
+        true,
+      ) as List?;
+}
+
+class GetCreatorWeeklyChartCall {
+  Future<ApiCallResponse> call({
+    int? year = 0,
+    int? weekNumber = 0,
+    String? creatorId = '',
+    int? receipeId,
+    String? apiKey,
+    String? apiUrl,
+    String? type = '',
+  }) async {
+    apiKey ??= FFDevEnvironmentValues().ApiKey;
+    apiUrl ??= FFDevEnvironmentValues().ApiUrl;
+    final baseUrl = SupabaseGroup.getBaseUrl(
+      creatorId: creatorId,
+      receipeId: receipeId,
+      apiKey: apiKey,
+      apiUrl: apiUrl,
+      type: type,
+    );
+
+    final ffApiRequestBody = '''
+{
+  "creator_id": "${escapeStringForJson(creatorId)}",
+  "week_number": ${weekNumber},
+  "year": ${year}
+}''';
+    return ApiManager.instance.makeApiCall(
+      callName: 'get creator weekly chart',
+      apiUrl: '${baseUrl}/functions/v1/get-creator-weekly-chart',
+      callType: ApiCallType.POST,
+      headers: {
+        'Authorization': 'Bearer ${apiKey}',
+      },
+      params: {},
+      body: ffApiRequestBody,
+      bodyType: BodyType.JSON,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+}
+
+class GetRecipeWeeklyChartCall {
+  Future<ApiCallResponse> call({
+    int? weekNumber = 0,
+    int? year = 0,
+    String? creatorId = '',
+    int? receipeId,
+    String? apiKey,
+    String? apiUrl,
+    String? type = '',
+  }) async {
+    apiKey ??= FFDevEnvironmentValues().ApiKey;
+    apiUrl ??= FFDevEnvironmentValues().ApiUrl;
+    final baseUrl = SupabaseGroup.getBaseUrl(
+      creatorId: creatorId,
+      receipeId: receipeId,
+      apiKey: apiKey,
+      apiUrl: apiUrl,
+      type: type,
+    );
+
+    final ffApiRequestBody = '''
+{
+  "recipe_id": ${receipeId},
+  "week_number": ${weekNumber},
+  "year": ${year}
+}''';
+    return ApiManager.instance.makeApiCall(
+      callName: 'get recipe weekly chart',
+      apiUrl: '${baseUrl}/functions/v1/get-recipe-weekly-chart',
+      callType: ApiCallType.POST,
+      headers: {
+        'Authorization': 'Bearer ${apiKey}',
+      },
+      params: {},
+      body: ffApiRequestBody,
+      bodyType: BodyType.JSON,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+}
+
+class TemporaryRecipeCleanerCall {
+  Future<ApiCallResponse> call({
+    String? creatorId = '',
+    int? receipeId,
+    String? apiKey,
+    String? apiUrl,
+    String? type = '',
+  }) async {
+    apiKey ??= FFDevEnvironmentValues().ApiKey;
+    apiUrl ??= FFDevEnvironmentValues().ApiUrl;
+    final baseUrl = SupabaseGroup.getBaseUrl(
+      creatorId: creatorId,
+      receipeId: receipeId,
+      apiKey: apiKey,
+      apiUrl: apiUrl,
+      type: type,
+    );
+
+    final ffApiRequestBody = '''
+{
+  "recipe_id": ${receipeId}
+}''';
+    return ApiManager.instance.makeApiCall(
+      callName: 'temporary recipe cleaner',
+      apiUrl: '${baseUrl}/functions/v1/dynamic-processor',
       callType: ApiCallType.POST,
       headers: {
         'Authorization': 'Bearer ${apiKey}',

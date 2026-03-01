@@ -79,7 +79,7 @@ class _MyAppState extends State<MyApp> {
 
     _appStateNotifier = AppStateNotifier.instance;
     _router = createRouter(_appStateNotifier);
-    userStream = recipeAdditionSupabaseUserStream()
+    userStream = akeliCreatorSupabaseUserStream()
       ..listen((user) {
         _appStateNotifier.update(user);
       });
@@ -99,7 +99,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
-      title: 'recipe addition',
+      title: 'akeli creator',
       scrollBehavior: MyAppScrollBehavior(),
       localizationsDelegates: [
         GlobalMaterialLocalizations.delegate,

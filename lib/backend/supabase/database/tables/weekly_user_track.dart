@@ -27,22 +27,20 @@ class WeeklyUserTrackRow extends SupabaseDataRow {
   DateTime? get endDate => getField<DateTime>('end_date');
   set endDate(DateTime? value) => setField<DateTime>('end_date', value);
 
-  double? get targetCalorie => getField<double>('target_calorie');
-  set targetCalorie(double? value) => setField<double>('target_calorie', value);
+  int? get targetCalorie => getField<int>('target_calorie');
+  set targetCalorie(int? value) => setField<int>('target_calorie', value);
 
-  double? get consumedCalories => getField<double>('consumed_calories');
-  set consumedCalories(double? value) =>
-      setField<double>('consumed_calories', value);
+  int? get consumedCalories => getField<int>('consumed_calories');
+  set consumedCalories(int? value) => setField<int>('consumed_calories', value);
 
-  double? get consumedCarb => getField<double>('consumed_carb');
-  set consumedCarb(double? value) => setField<double>('consumed_carb', value);
+  int? get consumedCarb => getField<int>('consumed_carb');
+  set consumedCarb(int? value) => setField<int>('consumed_carb', value);
 
-  double? get consumedFat => getField<double>('consumed_fat');
-  set consumedFat(double? value) => setField<double>('consumed_fat', value);
+  int? get consumedFat => getField<int>('consumed_fat');
+  set consumedFat(int? value) => setField<int>('consumed_fat', value);
 
-  double? get consumedProtein => getField<double>('consumed_protein');
-  set consumedProtein(double? value) =>
-      setField<double>('consumed_protein', value);
+  int? get consumedProtein => getField<int>('consumed_protein');
+  set consumedProtein(int? value) => setField<int>('consumed_protein', value);
 
   double? get caloriePercent => getField<double>('calorie_percent');
   set caloriePercent(double? value) =>

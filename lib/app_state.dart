@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'flutter_flow/request_manager.dart';
+import 'backend/supabase/supabase.dart';
 
 class FFAppState extends ChangeNotifier {
   static FFAppState _instance = FFAppState._internal();
@@ -54,4 +56,59 @@ class FFAppState extends ChangeNotifier {
   set roundtTypeIndex(int value) {
     _roundtTypeIndex = value;
   }
+
+  bool _sidebarOpen = false;
+  bool get sidebarOpen => _sidebarOpen;
+  set sidebarOpen(bool value) {
+    _sidebarOpen = value;
+  }
+
+  bool _landingpageSidebarOpen = false;
+  bool get landingpageSidebarOpen => _landingpageSidebarOpen;
+  set landingpageSidebarOpen(bool value) {
+    _landingpageSidebarOpen = value;
+  }
+
+  bool _navbarOpen = false;
+  bool get navbarOpen => _navbarOpen;
+  set navbarOpen(bool value) {
+    _navbarOpen = value;
+  }
+
+  String _creatorAuthId = '';
+  String get creatorAuthId => _creatorAuthId;
+  set creatorAuthId(String value) {
+    _creatorAuthId = value;
+  }
+
+  final _creatorIdentityManager = FutureRequestManager<List<CreatorRow>>();
+  Future<List<CreatorRow>> creatorIdentity({
+    String? uniqueQueryKey,
+    bool? overrideCache,
+    required Future<List<CreatorRow>> Function() requestFn,
+  }) =>
+      _creatorIdentityManager.performRequest(
+        uniqueQueryKey: uniqueQueryKey,
+        overrideCache: overrideCache,
+        requestFn: requestFn,
+      );
+  void clearCreatorIdentityCache() => _creatorIdentityManager.clear();
+  void clearCreatorIdentityCacheKey(String? uniqueKey) =>
+      _creatorIdentityManager.clearRequest(uniqueKey);
+
+  final _dashboardManager =
+      FutureRequestManager<List<CreatorDashboardStatsRow>>();
+  Future<List<CreatorDashboardStatsRow>> dashboard({
+    String? uniqueQueryKey,
+    bool? overrideCache,
+    required Future<List<CreatorDashboardStatsRow>> Function() requestFn,
+  }) =>
+      _dashboardManager.performRequest(
+        uniqueQueryKey: uniqueQueryKey,
+        overrideCache: overrideCache,
+        requestFn: requestFn,
+      );
+  void clearDashboardCache() => _dashboardManager.clear();
+  void clearDashboardCacheKey(String? uniqueKey) =>
+      _dashboardManager.clearRequest(uniqueKey);
 }

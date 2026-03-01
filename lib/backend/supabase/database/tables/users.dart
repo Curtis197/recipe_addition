@@ -41,4 +41,16 @@ class UsersRow extends SupabaseDataRow {
 
   String? get userId => getField<String>('user_id');
   set userId(String? value) => setField<String>('user_id', value);
+
+  bool? get freePlan => getField<bool>('free_plan');
+  set freePlan(bool? value) => setField<bool>('free_plan', value);
+
+  bool? get paidPlan => getField<bool>('paid_plan');
+  set paidPlan(bool? value) => setField<bool>('paid_plan', value);
+
+  bool? get cgu => getField<bool>('CGU');
+  set cgu(bool? value) => setField<bool>('CGU', value);
+
+  bool? get confidentiality => getField<bool>('confidentiality');
+  set confidentiality(bool? value) => setField<bool>('confidentiality', value);
 }
