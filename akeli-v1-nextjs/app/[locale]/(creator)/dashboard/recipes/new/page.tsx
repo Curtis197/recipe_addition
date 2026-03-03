@@ -1,8 +1,13 @@
-export default function Page() {
+import RecipeWizard from "@/components/creator/recipe-form/RecipeWizard";
+
+export const metadata = {
+  title: "Nouvelle recette — Akeli Créateur",
+};
+
+export default function NewRecipePage() {
   return (
-    <main className="space-y-4">
-      <h1 className="text-2xl font-bold">Nouvelle recette</h1>
-      <p className="text-muted-foreground">🚧 En construction</p>
+    <main className="py-6 px-4 sm:px-6">
+      <RecipeWizard />
     </main>
   );
 }
