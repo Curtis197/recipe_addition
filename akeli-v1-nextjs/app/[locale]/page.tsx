@@ -2,6 +2,8 @@ import { useTranslations } from "next-intl";
 import { getTranslations } from "next-intl/server";
 import Link from "next/link";
 import type { Metadata } from "next";
+import { faqData } from "@/data/faq";
+import { FAQAccordion } from "@/components/ui/FAQAccordion";
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations("landing.hero");
@@ -10,6 +12,8 @@ export async function generateMetadata(): Promise<Metadata> {
     description: t("subtitle"),
   };
 }
+
+const userFAQ = faqData.filter((q) => q.placement === "landing");
 
 export default function LandingPage() {
   const t = useTranslations("landing");
@@ -31,7 +35,7 @@ export default function LandingPage() {
               {t("hero.ctaDownload")}
             </a>
             <Link
-              href="/auth/signup"
+              href="/become-creator"
               className="inline-flex items-center justify-center rounded-lg border border-primary px-8 py-3 text-sm font-semibold text-primary hover:bg-primary/5 transition-colors"
             >
               {t("hero.ctaCreator")}
@@ -81,6 +85,16 @@ export default function LandingPage() {
         </div>
       </section>
 
+      {/* ── FAQ utilisateur ── */}
+      <section className="bg-secondary/40 px-4 py-20">
+        <div className="max-w-2xl mx-auto space-y-8">
+          <h2 className="text-2xl font-bold text-foreground text-center">
+            Questions fréquentes
+          </h2>
+          <FAQAccordion items={userFAQ} expandFirst />
+        </div>
+      </section>
+
       {/* ── Footer ── */}
       <footer className="border-t border-border px-4 py-8">
         <div className="max-w-4xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
@@ -88,6 +102,9 @@ export default function LandingPage() {
           <nav className="flex gap-6 text-sm text-muted-foreground">
             <Link href="/about" className="hover:text-foreground transition-colors">
               À propos
+            </Link>
+            <Link href="/become-creator" className="hover:text-foreground transition-colors">
+              Devenir créateur
             </Link>
             <Link href="/legal/terms" className="hover:text-foreground transition-colors">
               CGU
